@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Reinos & Monstros</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+</head>
+<body>
+
+    <!-- ============================================ -->
+    <!-- TELA 1: BOAS-VINDAS -->
+    <!-- ============================================ -->
+<div id="welcomeScreen" class="screen active">
+    <h1>⚔️ Reinos & Monstros ⚔️</h1>
+    <p class="welcome-subtitle">Uma aventura épica te aguarda...</p>
+
+    <!-- Seletor de Modo -->
+    <div id="modoSelector" style="margin:10px 0;">
+        <button onclick="selecionarModo('normal')" id="btnModoNormal" class="modo-btn modo-normal-btn modo-selecionado">
+            🎮 Modo Normal
+        </button>
+        <button onclick="selecionarModo('hardcore')" id="btnModoHardcore" class="modo-btn modo-hardcore-btn">
+            ☠️ Modo Hardcore
+        </button>
+    </div>
+
+    <div id="modoDescricao" class="modo-descricao">
+        <p id="modoDescTexto">Modo clássico. Ao morrer, perde 50% do ouro e revive na cidade.</p>
+    </div>
+
+    <button onclick="mudarTela('characterSelectionScreen')">🎮 Jogar</button>
+    <button onclick="carregarJogoSalvo()" id="btnLoadGame" style="display:none;">💾 Continuar Jogo Salvo</button>
+</div>
+    <!-- ============================================ -->
+    <!-- TELA 2: SELEÇÃO DE PERSONAGEM -->
+    <!-- ============================================ -->
+    <div id="characterSelectionScreen" class="screen">
+        <h2>Escolha o seu Herói</h2>
+        <div id="cardsContainer"></div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TELA 3: JOGO PRINCIPAL -->
+    <!-- ============================================ -->
+    <div id="game" class="screen">
+
+        <!-- =============================== -->
+        <!-- COLUNA ESQUERDA: PAINEL DO JOGADOR -->
+        <!-- =============================== -->
+        <div id="player">
+            <img id="playerImage" width="120" alt="Avatar do Jogador">
+            <br>
+            Nome: <span id="playerNameUI"></span> | Raça: <span id="raceUI"></span><br>
+            Classe: <span id="classUI"></span><br>
+
+            <!-- Barra de Vida -->
+            Vida: <span id="hpText"></span>
+            <div class="hp-container">
+                <div id="playerHpBar"></div>
+            </div>
+
+            <!-- Info básica -->
+            💰 Ouro: <span id="goldUI"></span> | ⭐ Level: <span id="levelUI"></span><br>
+
+            <!-- Barra de XP -->
+            <p>📊 XP: <span id="xpText">0/100</span></p>
+            <div class="xpText">
+                <div id="playerXpBar"></div>
+            </div>
+
+            <!-- Poções -->
+            🧪 Poções: <span id="potionsUI"></span>
+
+           <p><span id="atkTypeIcon">⚔️</span> ATK: <span id="atkUI">0</span> | 🛡️ DEF: <span id="defUI">0</span></p>
+
+            <!-- Atributos -->
+            <p>
+                ⚔️ Força: <span id="forcaUI"></span> |
+                🏹 Destreza: <span id="destrezaUI"></span> |
+                ❤️ Vigor: <span id="vigorUI"></span> |
+                🔮 Inteligência: <span id="inteligenciaUI"></span><br>
+                📖 Sabedoria: <span id="sabedoriaUI"></span> |
+                🗣️ Carisma: <span id="carismaUI"></span>
+            </p>
+        </div><!-- FIM #player -->
+
+        <!-- =============================== -->
+        <!-- COLUNA CENTRAL: PAINEL DE AÇÕES -->
+        <!-- =============================== -->
+        <div id="actionPanel">
+
+            <!-- ---- MENU PRINCIPAL DE NAVEGAÇÃO ---- -->
+            <div id="navigationContainer">
+                <div id="mainMenu">
+                    <button onclick="showSubMenu('explorar')">🗺️ Explorar</button>
+                    <button onclick="showSubMenu('cidade')">🏘️ Cidade</button>
+                    <button onclick="showSubMenu('inventario')">🎒 Inventário</button>
+                    <button onclick="showSubMenu('talentos')">⭐ Talentos</button>
+                    
+                </div>
+                <div id="subMenu"></div>
+            </div>
+
+            <!-- ---- TELA DE ÁREAS DE EXPLORAÇÃO ---- -->
+            <div id="areaSelectionPanel" style="display:none;">
+                <h3>🗺️ Escolha uma Área para Explorar</h3>
+                <div id="areasContainer">
+                    <!-- TIER 1 -->
+                    <div class="area-card" id="area-floresta" onclick="selecionarArea('floresta')">
+                        <div class="area-icon">🌲</div>
+                        <h4>Floresta Sombria</h4>
+                        <p>Nível 1-3</p>
+                        <span class="area-difficulty">⭐</span>
+                        <div class="lock-overlay" id="lock-floresta" style="display:none;">🔒 Nv.1</div>
+                    </div>
+                    <div class="area-card locked" id="area-pantano" onclick="selecionarArea('pantano')">
+                        <div class="area-icon">🐸</div>
+                        <h4>Pântano Venenoso</h4>
+                        <p>Nível 4-6</p>
+                        <span class="area-difficulty">⭐</span>
+                        <div class="lock-overlay" id="lock-pantano">🔒 Nv.4</div>
+                        
+                    </div>
+                    <div class="area-card locked" id="area-colinas" onclick="selecionarArea('colinas')">
+                        <div class="area-icon">⛰️</div>
+                        <h4>Colinas Sangrentas</h4>
+                        <p>Nível 7-9</p>
+                        <span class="area-difficulty">⭐⭐</span>
+                        <div class="lock-overlay" id="lock-colinas">🔒 Nv.7</div>
+                    </div>
+
+                    <!-- TIER 2 -->
+                    <div class="area-card locked" id="area-ruinas" onclick="selecionarArea('ruinas')">
+                        <div class="area-icon">🏚️</div>
+                        <h4>Ruínas Esquecidas</h4>
+                        <p>Nível 10-12</p>
+                        <span class="area-difficulty">⭐⭐</span>
+                        <div class="lock-overlay" id="lock-ruinas">🔒 Nv.10</div>
+                    </div>
+                    <div class="area-card locked" id="area-deserto" onclick="selecionarArea('deserto')">
+                        <div class="area-icon">🏜️</div>
+                        <h4>Deserto Escaldante</h4>
+                        <p>Nível 13-15</p>
+                        <span class="area-difficulty">⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-deserto">🔒 Nv.13</div>
+                    </div>
+                    <div class="area-card locked" id="area-cemiterio" onclick="selecionarArea('cemiterio')">
+                        <div class="area-icon">⚰️</div>
+                        <h4>Cemitério Profano</h4>
+                        <p>Nível 16-18</p>
+                        <span class="area-difficulty">⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-cemiterio">🔒 Nv.16</div>
+                    </div>
+
+                    <!-- TIER 3 -->
+                    <div class="area-card locked" id="area-caverna" onclick="selecionarArea('caverna')">
+                        <div class="area-icon">🕳️</div>
+                        <h4>Caverna Profunda</h4>
+                        <p>Nível 19-21</p>
+                        <span class="area-difficulty">⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-caverna">🔒 Nv.19</div>
+                    </div>
+                    <div class="area-card locked" id="area-vulcao" onclick="selecionarArea('vulcao')">
+                        <div class="area-icon">🌋</div>
+                        <h4>Vulcão Infernal</h4>
+                        <p>Nível 22-24</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-vulcao">🔒 Nv.22</div>
+                    </div>
+                    <div class="area-card locked" id="area-geleira" onclick="selecionarArea('geleira')">
+                        <div class="area-icon">🏔️</div>
+                        <h4>Geleira Eterna</h4>
+                        <p>Nível 25-27</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-geleira">🔒 Nv.25</div>
+                    </div>
+
+                    <!-- TIER 4 -->
+                    <div class="area-card locked" id="area-cidadeFant" onclick="selecionarArea('cidadeFant')">
+                        <div class="area-icon">👻</div>
+                        <h4>Cidade Fantasma</h4>
+                        <p>Nível 28-30</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-cidadeFant">🔒 Nv.28</div>
+                    </div>
+                    <div class="area-card locked" id="area-abismo" onclick="selecionarArea('abismo')">
+                        <div class="area-icon">🌑</div>
+                        <h4>Abismo Sombrio</h4>
+                        <p>Nível 31-33</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-abismo">🔒 Nv.31</div>
+                    </div>
+                    <div class="area-card locked" id="area-castelo" onclick="selecionarArea('castelo')">
+                        <div class="area-icon">🏰</div>
+                        <h4>Castelo Amaldiçoado</h4>
+                        <p>Nível 34-36</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-castelo">🔒 Nv.34</div>
+                    </div>
+
+                    <!-- TIER 5 -->
+                    <div class="area-card locked" id="area-planoAstral" onclick="selecionarArea('planoAstral')">
+                        <div class="area-icon">🌌</div>
+                        <h4>Plano Astral</h4>
+                        <p>Nível 37-39</p>
+                        <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                        <div class="lock-overlay" id="lock-planoAstral">🔒 Nv.37</div>
+                    </div>
+                    <div class="area-card locked" id="area-infernus" onclick="selecionarArea('infernus')">
+                        <div class="area-icon">🔥</div>
+                        <h4>Infernus</h4>
+                        <p>Nível 40-42</p>
+                        <span class="area-difficulty">☠️☠️</span>
+                        <div class="lock-overlay" id="lock-infernus">🔒 Nv.40</div>
+                    </div>
+                    <div class="area-card locked" id="area-tronoDeus" onclick="selecionarArea('tronoDeus')">
+                        <div class="area-icon">⚡</div> 
+                        <h4>Trono dos Deuses</h4>
+                        <p>Nível 43-45</p> 
+                        <span class="area-difficulty">☠️☠️☠️</span>
+                        <div class="lock-overlay" id="lock-tronoDeus">🔒 Nv.43</div>
+                        
+                    </div>
+                </div><!-- FIM #areasContainer -->
+                <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #areaSelectionPanel -->
+            <!-- ---- TELA DE OPÇÕES DA ÁREA ---- -->
+            <div id="areaOptionsPanel" style="display:none;">
+                <h3 id="areaOptionsTitle">Área Selecionada</h3>
+                <p id="areaOptionsDescription" class="area-description-text"></p>
+
+               <!-- MISSÃO ATIVA -->
+                <div id="missaoDisplay" style="margin-bottom:12px;"></div>
+
+                <div id="areaActionButtons">
+                    <button class="action-btn hunt-btn" onclick="iniciarCaca()">
+                        <span class="btn-icon">🏹</span>
+                        <span class="btn-text">CAÇAR</span>
+                        <span class="btn-desc">Encontre monstros</span>
+                    </button>
+                    <button class="action-btn dungeon-btn" onclick="iniciarMasmorra()">
+                        <span class="btn-icon">🏰</span>
+                        <span class="btn-text">MASMORRA</span>
+                        <span class="btn-desc">Masmorras perigosas</span>
+                    </button>
+                    <button class="action-btn mine-btn" onclick="iniciarMineracao()">
+                        <span class="btn-icon">⛏️</span>
+                        <span class="btn-text">MINERAR</span>
+                        <span class="btn-desc">Extrair minérios</span>
+                    </button>
+                </div>
+                 <!-- BOTÃO PEGAR MISSÃO -->
+                <button onclick="pegarMissao()" style="margin:12px auto;display:block;padding:10px 20px;background:linear-gradient(180deg,#92400e,#78350f);border:1px solid #b45309;color:#fbbf24;border-radius:8px;font-weight:bold;cursor:pointer;">
+                    📜 Pegar Missão
+                </button>
+
+                <button onclick="voltarSelecaoArea()" class="back-btn">⬅️ Voltar às Áreas</button>
+            </div><!-- FIM #areaOptionsPanel -->
+           
+         <!-- ---- PAINEL DE MINERAÇÃO ---- -->
+            <div id="mineracaoPanel" style="display:none;">
+                <h3 style="color:#ffd700;text-align:center;margin-bottom:8px;">⛏️ Mineração</h3>
+                <p id="mineracaoAreaNome" style="text-align:center;color:#94a3b8;font-size:0.85em;margin-bottom:10px;"></p>
+                
+                <div id="mineracaoInfo" style="text-align:center;margin-bottom:12px;">
+                    <p style="color:#fbbf24;font-size:0.9em;">Tentativas restantes: <strong id="mineracaoTentativas">3</strong>/3</p>
+                    <p style="color:#64748b;font-size:0.78em;">Custo: <span id="mineracaoCusto">10</span> ouro por tentativa</p>
+                </div>
+
+                <div id="mineracaoAnimacao" style="display:none;text-align:center;padding:30px;">
+                    <div id="mineracaoEmoji" style="font-size:3em;animation:minerarAnim 0.4s ease infinite alternate;">⛏️</div>
+                    <p style="color:#e2e8f0;margin-top:10px;">Minerando...</p>
+                </div>
+
+                <div id="mineracaoResultado" style="display:none;"></div>
+
+                <div id="mineracaoBotoes" style="text-align:center;margin-top:12px;">
+                    <button onclick="minerar()" id="btnMinerar" class="action-btn mine-btn" style="margin:0 auto;">
+                        <span class="btn-icon">⛏️</span>
+                        <span class="btn-text">MINERAR</span>
+                        <span class="btn-desc">Gastar tentativa</span>
+                    </button>
+                </div>
+
+                <div id="mineracaoMateriais" style="margin-top:15px;"></div>
+
+                <button onclick="voltarDaMineracao()" class="back-btn" style="margin-top:12px;">⬅️ Voltar à Área</button>
+            </div><!-- FIM #mineracaoPanel -->
+
+
+            <!-- ---- ÁREA DE COMBATE ---- -->
+            <div id="monsterArea" style="display:none;">
+                <div id="combatHeader">
+                    <h3>⚔️ COMBATE ⚔️</h3>
+                </div>
+
+                <div id="monsterInfo">
+                    <div id="monsterEmoji" class="monster-emoji-display"></div>
+                    <img id="monsterImage" width="70" alt="Monstro" style="display:none;">
+                    <h3 id="monsterName"></h3>
+                    <p>Vida: <span id="monsterHpText"></span></p>
+                    <div class="hp-container">
+                        <div id="monsterHpBar"></div>
+                    </div>
+                    <p>
+                        ⚡ ATK: <span id="monsterAtkUI">0</span> |
+                        🛡️ DEF: <span id="monsterDefUI">0</span>
+                    </p>
+                </div>
+
+                <div id="combatLog">
+                    <p>Preparando combate...</p>
+                </div>
+
+                <div id="combatActions">
+                    <button onclick="atacar()" id="btnAttack">⚔️ Atacar</button>
+                    <button onclick="usePotion()" id="btnPotion">🧪 Poção</button>
+                    <button onclick="usarHabilidade()" id="btnSkill">✨ Habilidade</button>
+                    <button onclick="fugir()" id="btnFlee">🏃 Fugir</button>
+                </div>
+            </div><!-- ✅ FECHA #monsterArea CORRETAMENTE -->
+
+            <!-- ---- TELA DE MASMORRA ---- -->
+            <div id="dungeonPanel" style="display:none;">
+                <h3 id="dungeonTitle">🏰 Masmorra</h3>
+
+                <div id="dungeonProgressInfo">
+                    <span>Andar: <span id="dungeonFloor">1</span> / <span id="dungeonMaxFloor">5</span></span>
+                </div>
+                <div class="hp-container">
+                    <div id="dungeonProgressBar" style="width:0%; background: linear-gradient(90deg, #aa44ff, #cc66ff);"></div>
+                </div>
+
+                <div id="dungeonEventDisplay">
+                    <div id="dungeonEventIcon" class="dungeon-event-icon-display">🚪</div>
+                    <p id="dungeonEventText">Entrando na masmorra...</p>
+                </div>
+
+                <div id="dungeonActions">
+                    <button onclick="avancarMasmorra()" id="btnDungeonAdvance" class="action-btn">🚪 Avançar</button>
+                    <button onclick="sairMasmorra()" class="back-btn">🏃 Sair da Masmorra</button>
+                </div>
+            </div><!-- FIM #dungeonPanel -->
+
+            <!-- ---- TELA DA CIDADE ---- -->
+<div id="cidadePanel" style="display:none;">
+    <h3>🏘️ Cidade</h3>
+    <div id="cidadeOptions" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+        <button onclick="descansar()" class="cidade-btn">🏨 Estalagem<br><small>(20 ouro - Restaura HP)</small></button>
+        <button onclick="abrirLoja()" class="cidade-btn">🛒 Loja<br><small>(Comprar itens)</small></button>
+        <button onclick="abrirFerreiro()" class="cidade-btn">⚒️ Ferreiro<br><small>(Equipamentos)</small></button>
+        <button onclick="abrirTreinamento()" class="cidade-btn">🎓 Treinador<br><small>(+Atributos por ouro)</small></button>
+        <button onclick="abrirAlquimia()" class="cidade-btn">🧪 Alquimia<br><small>(Criar itens e poções)</small></button>
+        <button onclick="abrirTaverna()" class="cidade-btn">🍺 Taverna<br><small>(Conversar com NPCs)</small></button>
+        <button onclick="abrirGuilda()" class="cidade-btn">🏠 Guilda<br><small>(Facções e missões)</small></button>
+        <button onclick="abrirArena()" class="cidade-btn">🏟️ Arena<br><small>(Ondas de combate)</small></button>
+        <button onclick="mostrarPainel('cemiterioPanel');renderizarCemiterio()" class="cidade-btn">⚰️ Cemitério<br><small>(Resgatar equip)</small></button>
+        <button onclick="salvarJogo()" class="cidade-btn">💾 Salvar<br><small>Salvar progresso</small></button>
+    </div>
+    <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+</div>
+            <!-- ---- TELA DA LOJA ---- -->
+            <div id="lojaPanel" style="display:none;">
+                <h3>🛒 Loja</h3>
+                <p class="gold-display">💰 Seu Ouro: <span id="lojaGoldUI">0</span></p>
+
+                <div class="shop-tabs">
+                    <button id="tabLojaComprar" class="shop-tab active-tab" onclick="trocarAbaLoja('comprar')">
+                        🛍️ Comprar
+                    </button>
+                    <button id="tabLojaVender" class="shop-tab" onclick="trocarAbaLoja('vender')">
+                        💰 Vender
+                    </button>
+                </div>
+
+                <div id="lojaComprarPanel" class="shop-content">
+                    <div id="lojaComprarLista" class="shop-list"></div>
+                </div>
+
+                <div id="lojaVenderPanel" class="shop-content" style="display:none;">
+                    <div id="lojaVenderLista" class="shop-list"></div>
+                    <p class="shop-hint" id="lojaVenderVazio" style="display:none;">
+                        Você não tem itens para vender.
+                    </p>
+                </div>
+
+                <button onclick="fecharLoja()" class="back-btn">⬅️ Voltar à Cidade</button>
+            </div><!-- FIM #lojaPanel -->
+
+            <!-- ---- TELA DO FERREIRO ---- -->
+            <div id="ferreiroPanel" style="display:none;">
+                <h3>⚒️ Ferreiro</h3>
+                <p class="gold-display">💰 Seu Ouro: <span id="ferreiroGoldUI">0</span></p>
+
+                <div class="shop-tabs">
+                    <button id="tabFerreiroComprar" class="shop-tab active-tab" onclick="trocarAbaFerreiro('comprar')">
+                        🛍️ Comprar Equipamentos
+                    </button>
+                    <button id="tabFerreiroVender" class="shop-tab" onclick="trocarAbaFerreiro('vender')">
+                        💰 Vender Equipamentos
+                    </button>
+                </div>
+
+                <div id="ferreiroComprarPanel" class="shop-content">
+                    <div id="ferreiroComprarLista" class="shop-list"></div>
+                </div>
+
+                <div id="ferreiroVenderPanel" class="shop-content" style="display:none;">
+                    <div id="ferreiroVenderLista" class="shop-list"></div>
+                    <p class="shop-hint" id="ferreiroVenderVazio" style="display:none;">
+                        Você não tem equipamentos para vender.
+                    </p>
+                </div>
+
+                <button onclick="fecharFerreiro()" class="back-btn">⬅️ Voltar à Cidade</button>
+            </div><!-- FIM #ferreiroPanel -->
+
+            <!-- ---- TELA DE INVENTÁRIO ---- -->
+            <div id="inventoryPanel" style="display:none;">
+                <h3>🎒 Inventário</h3>
+
+                <!-- Equipamentos Equipados -->
+                <div id="equipmentSection">
+                    <h4>⚔️ Equipamentos</h4>
+                    <div id="equipmentSlots">
+                        <div class="equip-slot" id="slot-arma" onclick="desequipar('arma')">
+                            <div class="equip-slot-icon">⚔️</div>
+                            <div class="equip-slot-label">Arma</div>
+                            <div class="equip-slot-item" id="slot-arma-item">Vazio</div>
+                        </div>
+                        <div class="equip-slot" id="slot-armadura" onclick="desequipar('armadura')">
+                            <div class="equip-slot-icon">🛡️</div>
+                            <div class="equip-slot-label">Armadura</div>
+                            <div class="equip-slot-item" id="slot-armadura-item">Vazio</div>
+                        </div>
+                        <div class="equip-slot" id="slot-elmo" onclick="desequipar('elmo')">
+                            <div class="equip-slot-icon">⛑️</div>
+                            <div class="equip-slot-label">Elmo</div>
+                            <div class="equip-slot-item" id="slot-elmo-item">Vazio</div>
+                        </div>
+                        <div class="equip-slot" id="slot-botas" onclick="desequipar('botas')">
+                            <div class="equip-slot-icon">👢</div>
+                            <div class="equip-slot-label">Botas</div>
+                            <div class="equip-slot-item" id="slot-botas-item">Vazio</div>
+                        </div>
+                        <div class="equip-slot" id="slot-anel" onclick="desequipar('anel')">
+                            <div class="equip-slot-icon">💍</div>
+                            <div class="equip-slot-label">Anel</div>
+                            <div class="equip-slot-item" id="slot-anel-item">Vazio</div>
+                        </div>
+                        <div class="equip-slot" id="slot-amuleto" onclick="desequipar('amuleto')">
+                            <div class="equip-slot-icon">📿</div>
+                            <div class="equip-slot-label">Amuleto</div>
+                            <div class="equip-slot-item" id="slot-amuleto-item">Vazio</div>
+                        </div>
+                    </div>
+
+                    <div id="equipBonusDisplay">
+                        <span>Bônus: ⚔️ ATK +<span id="bonusAtkTotal">0</span></span>
+                        <span> | 🛡️ DEF +<span id="bonusDefTotal">0</span></span>
+                        <span> | ❤️ HP +<span id="bonusHpTotal">0</span></span>
+                    </div>
+                </div>
+
+                <hr class="inventory-divider">
+
+                <div id="itemsSection">
+                    <h4>🎒 Itens</h4>
+                    <div id="inventoryList"></div>
+                    <p id="inventarioVazio" style="display:none; text-align:center; color:#64748b; padding:15px;">
+                        Nenhum item no inventário.
+                    </p>
+                </div>
+
+                <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #inventoryPanel -->
+
+            <!-- ---- TELA DE TALENTOS E CONQUISTAS ---- -->
+                        <div id="talentosPanel" style="display:none;">
+                <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">⭐ Progressão</h3>
+
+                <!-- Abas -->
+                <div style="display:flex;gap:0;margin-bottom:12px;border-radius:8px;overflow:hidden;border:1px solid #475569;">
+    <button onclick="trocarAbaTalento('talentos')" id="tabTalentos" class="shop-tab active-tab">⭐ Talentos</button>
+    <button onclick="trocarAbaTalento('habilidades')" id="tabHabilidades" class="shop-tab">🌟 Habilidades</button>
+    <button onclick="trocarAbaTalento('conquistas')" id="tabConquistas" class="shop-tab">🏆 Conquistas</button>
+    <button onclick="trocarAbaTalento('estatisticas')" id="tabEstatisticas" class="shop-tab">📊 Stats</button>
+</div>
+
+<div id="talentos" class="aba-talento"> <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">⭐ Árvore de Talentos</h4>
+    <div id="talentosDisplay"></div>
+</div>
+
+<div id="habilidades" class="aba-talento" style="display:none;"> <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🌟 Árvore de Habilidades</h4>
+    <div id="arvoreHabilidadesContent" style="max-height:350px;overflow-y:auto;"></div>
+</div>
+
+<div id="conquistas" class="aba-talento" style="display:none;"> <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🏆 Conquistas (<span id="conquistasCount">0</span>/<span id="conquistasTotal">0</span>)</h4>
+    <div id="conquistasLista" style="max-height:350px;overflow-y:auto;"></div>
+</div>
+
+<div id="estatisticas" class="aba-talento" style="display:none;"> <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">📊 Estatísticas</h4>
+    <div id="estatisticasDisplay" style="font-size:0.85em;color:#94a3b8;line-height:1.8;"></div>
+</div>
+
+                
+
+                <!-- Conteúdo Habilidades -->
+                <div id="abaConteudohabilidades" style="display:none;">
+                    <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🌟 Árvore de Habilidades</h4>
+                    <div id="arvoreHabilidadesContent" style="max-height:300px;overflow-y:auto;"></div>
+                </div>
+
+                <!-- Conteúdo Conquistas -->
+                <div id="abaConteudoconquistas" style="display:none;">
+                    <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🏆 Conquistas (<span id="conquistasCount">0</span>/<span id="conquistasTotal">0</span>)</h4>
+                    <div id="conquistasLista" style="max-height:300px;overflow-y:auto;"></div>
+                </div>
+
+                <!-- Conteúdo Estatísticas -->
+                <div id="abaConteudoestatisticas" style="display:none;">
+                    <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">📊 Estatísticas</h4>
+                    <div id="estatisticasDisplay" style="font-size:0.85em;color:#94a3b8;line-height:1.8;"></div>
+                </div>
+
+                <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #talentosPanel -->
+
+            <!-- ---- TREINAMENTO ---- -->
+            <div id="treinamentoPanel" style="display:none;">
+                <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🎓 Treinamento</h3>
+                <p style="text-align:center;color:#94a3b8;font-size:0.82em;margin-bottom:10px;">Pague para treinar atributos. Máximo +5 por atributo.</p>
+                <div id="treinamentoContent"></div>
+                <button onclick="fecharTreinamento()" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #treinamentoPanel -->
+<!-- ---- TELA DE ALQUIMIA ---- -->
+<div id="alquimiaPanel" style="display:none;">
+    <h3 style="color:#ffd700;text-align:center;margin-bottom:5px;">🧪 Alquimia</h3>
+    <p class="gold-display">💰 Ouro: <span id="alquimiaGoldUI">0</span></p>
+
+    <!-- Abas -->
+    <div class="shop-tabs">
+        <button id="tabAlqPocao" class="shop-tab active-tab" onclick="trocarAbaAlquimia('pocao')">
+            🧪 Poções
+        </button>
+        <button id="tabAlqElixir" class="shop-tab" onclick="trocarAbaAlquimia('elixir')">
+            💊 Elixires
+        </button>
+        <button id="tabAlqEquip" class="shop-tab" onclick="trocarAbaAlquimia('equipamento')">
+            ⚔️ Equips
+        </button>
+        <button id="tabAlqMateriais" class="shop-tab" onclick="trocarAbaAlquimia('materiais')">
+            📦 Materiais
+        </button>
+    </div>
+
+    <!-- Lista de receitas -->
+    <div class="shop-content">
+        <div id="alquimiaLista"></div>
+    </div>
+
+    <button onclick="fecharAlquimia()" class="back-btn">⬅️ Voltar à Cidade</button>
+</div><!-- FIM #alquimiaPanel -->
+
+<!-- ---- TAVERNA (NPCs) ---- -->
+<div id="tavernaPanel" style="display:none;">
+    <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🍺 Taverna</h3>
+    <p style="text-align:center;color:#94a3b8;font-size:0.82em;margin-bottom:12px;">
+        Converse com os habitantes da cidade e descubra segredos...
+    </p>
+    <div id="npcListContainer"></div>
+    <div id="npcDialogueBox" style="display:none;">
+        <div id="npcDialogueContent"></div>
+        <button onclick="fecharDialogo()" class="back-btn" style="margin-top:10px;">✖ Fechar</button>
+    </div>
+    <button onclick="fecharTaverna()" class="back-btn">⬅️ Voltar à Cidade</button>
+</div>
+
+<!-- ---- GUILDA ---- -->
+<div id="guildaPanel" style="display:none;">
+    <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🏠 Guilda</h3>
+    <div id="guildaContent"></div>
+    <button onclick="fecharGuilda()" class="back-btn">⬅️ Voltar à Cidade</button>
+</div>
+
+<!-- ---- EVENTO ALEATÓRIO ---- -->
+<div id="eventoPanel" style="display:none;">
+    <div id="eventoContent"></div>
+</div>
+
+            <!-- ---- ARENA ---- -->
+            <div id="arenaPanel" style="display:none;">
+                <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🏟️ Arena de Combate</h3>
+                <div id="arenaContent"></div>
+                <button onclick="fecharArena()" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #arenaPanel -->
+
+            <!-- ---- CEMITÉRIO ---- -->
+            <div id="cemiterioPanel" style="display:none;">
+                <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">⚰️ Cemitério</h3>
+                <div id="cemiterioContent"></div>
+                <button onclick="mostrarPainel('cidadePanel')" class="back-btn">⬅️ Voltar</button>
+            </div><!-- FIM #cemiterioPanel -->
+
+            <!-- ---- HISTÓRIA ---- -->
+            <div id="historiaPanel" style="display:none;">
+                <div id="historiaContent"></div>
+                           </div><!-- FIM #historiaPanel -->
+
+            
+        </div><!-- FIM #actionPanel -->
+
+        <!-- =============================== -->
+        <!-- COLUNA DIREITA: LOG / HISTÓRICO -->
+        <!-- =============================== -->
+        <div id="log">
+            <div style="font-weight: bold; text-align: center;">📜 Histórico de Aventura</div>
+            <div id="logContent"></div>
+        </div>
+
+    </div><!-- FIM #game -->
+
+
+    <!-- ============================================ -->
+    <!-- OVERLAYS (fora do game, posição fixa) -->
+    <!-- ============================================ -->
+
+    <!-- Tela de Resultado -->
+    <div id="resultScreen" class="overlay-screen" style="display:none;">
+        <div id="resultContent" class="overlay-box">
+            <h2 id="resultTitle">Resultado</h2>
+            <div id="resultIcon" class="result-icon-display"></div>
+            <p id="resultText"></p>
+            <div id="resultRewards"></div>
+            <button onclick="fecharResultado()" class="main-btn">Continuar</button>
+        </div>
+    </div>
+
+    <!-- Tela de Level Up -->
+    <div id="levelUpScreen" class="overlay-screen" style="display:none;">
+        <div id="levelUpContent" class="overlay-box levelup-box">
+            <h2>⭐ LEVEL UP! ⭐</h2>
+            <p id="levelUpText"></p>
+            <button onclick="fecharLevelUp()" class="main-btn">Continuar</button>
+        </div>
+    </div>
+
+    <!-- Tela de Game Over -->
+<div id="gameOverScreen" class="overlay-screen" style="display:none;">
+    <div id="gameOverContent" class="overlay-box gameover-box">
+        <h2>💀 GAME OVER 💀</h2>
+        <p>Você foi derrotado...</p>
+        <p id="gameOverText"></p>
+
+        <!-- Botões normais (aparecem no modo normal) -->
+        <div id="gameOverNormal">
+            <button onclick="reviver()">Reviver (perde 50% do ouro)</button>
+        </div>
+
+        <!-- Botões hardcore (aparecem no modo hardcore) -->
+        <div id="gameOverHardcore" style="display:none;">
+            <div id="hardcoreStats" style="margin:15px 0;"></div>
+            <button onclick="location.reload()" class="back-btn" style="margin-top:8px;">🏠 Menu Principal</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Notificação Flutuante -->
+    <div id="notification" class="notification-popup" style="display:none;">
+        <p id="notificationText"></p>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CONTROLE DE ÁUDIO (fixo no canto) -->
+    <!-- ============================================ -->
+    <div id="audioControls" style="
+        position: fixed;
+        bottom: 15px;
+        right: 15px;
+        z-index: 150;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid #334155;
+        border-radius: 10px;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        backdrop-filter: blur(4px);
+    ">
+        <button id="btnMudo" onclick="toggleMudo()" style="
+            background: none;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            padding: 2px 5px;
+            color: white;
+        ">🔊</button>
+        <input id="volumeSlider" type="range" min="0" max="1" step="0.1" value="0.5"
+            oninput="ajustarVolume(parseFloat(this.value))"
+            style="width: 70px; accent-color: #38bdf8; cursor: pointer;">
+    </div>
+
+<!-- Notificação de Área Desbloqueada -->
+<div id="areaUnlockPopup" style="display:none;">
+    <div class="unlock-glow"></div>
+    <div class="unlock-icon" id="unlockIcon">🌲</div>
+    <div class="unlock-label">NOVA ÁREA DESBLOQUEADA!</div>
+    <div class="unlock-name" id="unlockName">Floresta Sombria</div>
+    <div class="unlock-level" id="unlockLevel">Nível mínimo: 1</div>
+</div>
+
+<head>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+    <script src="game.js"></script>
+</body>
+</html>
