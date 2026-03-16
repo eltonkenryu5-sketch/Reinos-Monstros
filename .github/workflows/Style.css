@@ -1,0 +1,2922 @@
+/* ============================================
+   REINOS & MONSTROS - STYLE.CSS COMPLETO
+   Com todas as correções e atualizações
+   ============================================ */
+
+
+/* ============================================
+   SEÇÃO 1: CONFIGURAÇÕES GERAIS
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-image: url("images/Fundo/rpg.png");
+    overflow-x: hidden;
+}
+
+
+/* ============================================
+   SEÇÃO 2: SISTEMA DE TELAS
+   ============================================ */
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.screen.active {
+    display: flex;
+}
+
+
+/* ============================================
+   SEÇÃO 3: TELA DE BOAS-VINDAS
+   ============================================ */
+
+#welcomeScreen {
+    text-align: center;
+    gap: 20px;
+}
+
+#welcomeScreen h1 {
+    font-size: 3em;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5),
+                 0 4px 8px rgba(0, 0, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+    color: #ffffff;
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-size: 1.2em;
+    font-style: normal;
+    margin-bottom: 20px;
+    text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0  0 10px rgba(255, 215, 0, 0.5),
+         0  0 20px rgba(255, 215, 0, 0.3);
+}
+
+#welcomeScreen button {
+    font-size: 1.3em;
+    padding: 15px 40px;
+    margin: 5px;
+}
+
+
+/* ============================================
+   SEÇÃO 4: TELA DE SELEÇÃO DE PERSONAGEM
+   ============================================ */
+
+#characterSelectionScreen h2 {
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    color: #ffd700;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+#cardsContainer {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 15px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.card {
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+.card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+}
+
+
+/* ============================================
+   SEÇÃO 5: TELA DE JOGO - LAYOUT PRINCIPAL
+   ============================================ */
+
+#game.active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 20px;
+    gap: 20px;
+    flex-wrap: nowrap;
+    max-width: 100vw;
+    overflow: hidden;
+}
+
+
+/* ============================================
+   SEÇÃO 6: PAINEL DO JOGADOR
+   ============================================ */
+
+#player {
+    width: 300px;
+    min-width: 250px;
+    background: rgba(30, 41, 59, 0.92);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+    font-size: 0.9em;
+    line-height: 1.8;
+    align-self: flex-start;
+    flex-shrink: 1;
+}
+
+
+/* ============================================
+   SEÇÃO 7: PAINEL DE AÇÕES (CORRIGIDO)
+   ============================================ */
+
+#actionPanel {
+    flex: 1 1 500px;
+    max-width: 550px;
+    min-width: 320px;
+    background: rgba(30, 41, 59, 0.92);
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+    min-height: 400px;
+    align-self: flex-start;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* ============================================
+   SEÇÃO 8: MENU PRINCIPAL DE NAVEGAÇÃO
+   ============================================ */
+
+#navigationContainer {
+    text-align: center;
+}
+
+#mainMenu {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+#mainMenu button {
+    font-size: 1em;
+    padding: 12px 22px;
+    min-width: 130px;
+    transition: all 0.3s ease;
+}
+
+#mainMenu button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
+}
+
+#subMenu {
+    margin-top: 10px;
+}
+
+#subMenu h4 {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+#subMenu button {
+    margin: 5px;
+}
+
+
+/* ============================================
+   SEÇÃO 9: BARRAS DE VIDA E XP
+   ============================================ */
+
+.hp-container {
+    width: 100%;
+    height: 18px;
+    background-color: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 9px;
+    margin: 4px 0;
+    overflow: hidden;
+}
+
+.xpText {
+    width: 100%;
+    height: 18px;
+    background-color: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 9px;
+    margin: 4px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+#playerHpBar {
+    height: 100%;
+    background: linear-gradient(90deg, #44ff44, #66ff66);
+    width: 100%;
+    transition: width 0.5s ease;
+    border-radius: 8px;
+}
+
+#monsterHpBar {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    width: 100%;
+    transition: width 0.5s ease;
+    border-radius: 8px;
+    display: block;
+}
+
+#playerXpBar {
+    height: 100%;
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 8px;
+    position: relative;
+    max-width: 100%;
+}
+
+
+/* ============================================
+   SEÇÃO 10: BOTÕES GERAIS
+   ============================================ */
+
+button {
+    background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+    border: 1px solid #0284c7;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: all 0.2s ease;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+    background: linear-gradient(180deg, #7dd3fc, #38bdf8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.back-btn {
+    display: block;
+    margin: 15px auto 0 auto;
+    padding: 10px 25px;
+    font-size: 0.9em;
+    color: #94a3b8;
+    background: rgba(51, 65, 85, 0.7);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    color: #fff;
+    background: rgba(71, 85, 105, 0.9);
+    border-color: #64748b;
+}
+
+
+/* ============================================
+   SEÇÃO 11: PAINEL DE SELEÇÃO DE ÁREAS
+   ============================================ */
+
+#areaSelectionPanel {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+#areaSelectionPanel h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#areasContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 5px;
+    width: 100%;
+    max-width: 100%;
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.area-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    border: 2px solid #475569;
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.area-card:hover:not(.locked) {
+    border-color: #ffd700;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+}
+
+.area-card.locked {
+    display: none;
+}
+
+.area-card .area-icon {
+    font-size: 2em;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.area-card h4 {
+    color: #e2e8f0;
+    margin-bottom: 4px;
+    font-size: 0.85em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.area-card p {
+    color: #64748b;
+    font-size: 0.75em;
+    margin-bottom: 6px;
+}
+
+.area-difficulty {
+    font-size: 0.75em;
+    color: #fbbf24;
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1em;
+    font-weight: bold;
+    color: #f87171;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+}
+
+/* Cores por área */
+#area-floresta:not(.locked) {
+    border-color: #166534;
+    background: linear-gradient(135deg, rgba(20, 60, 25, 0.85), rgba(10, 35, 15, 0.95));
+}
+#area-floresta:hover:not(.locked) {
+    border-color: #22c55e;
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.25);
+}
+
+#area-ruinas:not(.locked) {
+    border-color: #92400e;
+    background: linear-gradient(135deg, rgba(80, 55, 20, 0.85), rgba(50, 35, 12, 0.95));
+}
+#area-ruinas:hover:not(.locked) {
+    border-color: #f59e0b;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
+}
+
+#area-caverna:not(.locked) {
+    border-color: #3730a3;
+    background: linear-gradient(135deg, rgba(30, 27, 75, 0.85), rgba(20, 18, 50, 0.95));
+}
+#area-caverna:hover:not(.locked) {
+    border-color: #818cf8;
+    box-shadow: 0 6px 20px rgba(129, 140, 248, 0.25);
+}
+
+#area-cidade:not(.locked) {
+    border-color: #6b21a8;
+    background: linear-gradient(135deg, rgba(60, 20, 70, 0.85), rgba(40, 10, 45, 0.95));
+}
+#area-cidade:hover:not(.locked) {
+    border-color: #c084fc;
+    box-shadow: 0 6px 20px rgba(192, 132, 252, 0.25);
+}
+
+
+/* ============================================
+   SEÇÃO 12: PAINEL DE OPÇÕES DA ÁREA (COMPACTO)
+   ============================================ */
+
+#areaOptionsPanel {
+    text-align: center;
+}
+
+#areaOptionsPanel h3 {
+    color: #ffd700;
+    margin-bottom: 6px;
+    font-size: 1.1em;
+}
+
+.area-description-text {
+    color: #94a3b8;
+    font-style: italic;
+    font-size: 0.82em;
+    margin-bottom: 12px;
+    padding: 6px 8px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 6px;
+    line-height: 1.5;
+}
+
+#areaActionButtons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    max-width: 150px;
+    text-align: center;
+}
+
+.btn-icon {
+    font-size: 1.4em;
+    margin-bottom: 2px;
+    display: block;
+    line-height: 1;
+}
+
+.btn-text {
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 1px;
+    display: block;
+}
+
+.btn-desc {
+    font-size: 0.6em;
+    opacity: 0.7;
+    display: block;
+    line-height: 1.2;
+}
+
+.hunt-btn {
+    background: linear-gradient(180deg, #14532d, #052e16);
+    border-color: #166534;
+    color: #4ade80;
+}
+
+.hunt-btn:hover {
+    background: linear-gradient(180deg, #166534, #14532d);
+    border-color: #22c55e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.dungeon-btn {
+    background: linear-gradient(180deg, #3b0764, #1e1b4b);
+    border-color: #6b21a8;
+    color: #c084fc;
+}
+
+.dungeon-btn:hover {
+    background: linear-gradient(180deg, #581c87, #3b0764);
+    border-color: #a855f7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+
+/* ============================================
+   SEÇÃO 13: ÁREA DE COMBATE (COMPACTO + HP FIX)
+   ============================================ */
+
+#monsterArea {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#combatHeader {
+    margin-bottom: 2px;
+}
+
+#combatHeader h3 {
+    color: #ef4444;
+    font-size: 1em;
+    margin: 0;
+    animation: combatPulse 1.5s infinite;
+}
+
+@keyframes combatPulse {
+    0%, 100% { text-shadow: 0 0 5px rgba(239, 68, 68, 0.3); }
+    50% { text-shadow: 0 0 20px rgba(239, 68, 68, 0.7); }
+}
+
+#monsterInfo {
+    background: rgba(127, 29, 29, 0.25);
+    border: 1px solid #7f1d1d;
+    border-radius: 8px;
+    padding: 6px 10px 8px;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1px;
+}
+
+.monster-emoji-display {
+    font-size: 1.4em;
+    line-height: 1;
+    margin: 0;
+    animation: monsterBounce 2s infinite;
+}
+
+@keyframes monsterBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+#monsterImage {
+    border-radius: 6px;
+    border: 1px solid #7f1d1d;
+    display: block;
+    max-width: 70px;
+    height: auto;
+    margin: 2px 0;
+}
+
+#monsterName {
+    color: #fca5a5;
+    font-size: 0.85em;
+    margin: 1px 0;
+}
+
+#monsterInfo p {
+    color: #d1d5db;
+    font-size: 0.75em;
+    margin: 0;
+    line-height: 1.3;
+}
+
+#monsterInfo .hp-container {
+    width: 70%;
+    height: 10px;
+    background-color: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 5px;
+    margin: 3px auto;
+    overflow: hidden;
+    display: block;
+}
+
+#monsterHpBar {
+    height: 100%;
+    background: linear-gradient(90deg, #ef4444, #f87171);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+    width: 100%;
+    display: block;
+}
+
+#combatLog {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 6px 8px;
+    margin: 4px 0;
+    max-height: 100px;
+    min-height: 40px;
+    overflow-y: auto;
+    text-align: left;
+    font-size: 0.78em;
+    line-height: 1.4;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+#combatLog p {
+    margin: 1px 0;
+    padding: 1px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.combat-player { color: #60a5fa; }
+.combat-enemy { color: #f87171; }
+.combat-info { color: #9ca3af; }
+.combat-critical { color: #fbbf24; font-weight: bold; }
+.combat-heal { color: #4ade80; }
+
+#combatActions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin-top: 4px;
+    position: relative;
+    z-index: 0;
+    flex-shrink: 0;
+}
+
+#combatActions button {
+    padding: 6px 4px;
+    font-size: 0.8em;
+    border-radius: 6px;
+}
+
+#btnFlee {
+    background: linear-gradient(180deg, #78350f, #451a03);
+    border-color: #92400e;
+    color: #fbbf24;
+}
+
+#btnFlee:hover {
+    background: linear-gradient(180deg, #92400e, #78350f);
+    border-color: #f59e0b;
+}
+
+#btnSkill {
+    background: linear-gradient(180deg, #4c1d95, #2e1065);
+    border-color: #6d28d9;
+    color: #c4b5fd;
+}
+
+#btnSkill:hover {
+    background: linear-gradient(180deg, #5b21b6, #4c1d95);
+    border-color: #8b5cf6;
+}
+
+#btnDefend {
+    background: linear-gradient(180deg, #065f46, #064e3b);
+    border-color: #047857;
+    color: #6ee7b7;
+}
+
+#btnDefend:hover {
+    background: linear-gradient(180deg, #047857, #065f46);
+    border-color: #10b981;
+}
+
+#btnPotion {
+    background: linear-gradient(180deg, #831843, #500724);
+    border-color: #9d174d;
+    color: #f9a8d4;
+}
+
+#btnPotion:hover {
+    background: linear-gradient(180deg, #9d174d, #831843);
+    border-color: #ec4899;
+}
+
+
+/* ============================================
+   SEÇÃO 14: PAINEL DE MASMORRA
+   ============================================ */
+
+#dungeonPanel {
+    text-align: center;
+}
+
+#dungeonTitle {
+    color: #c084fc;
+    margin-bottom: 12px;
+    font-size: 1.2em;
+}
+
+#dungeonProgressInfo {
+    color: #a78bfa;
+    margin-bottom: 8px;
+    font-size: 1em;
+}
+
+#dungeonProgressBar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+    border-radius: 8px;
+    transition: width 0.5s ease;
+}
+
+#dungeonEventDisplay {
+    background: rgba(59, 7, 100, 0.3);
+    border: 1px solid #6b21a8;
+    border-radius: 10px;
+    padding: 25px 15px;
+    margin: 15px 0;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dungeon-event-icon-display {
+    font-size: 2.8em;
+    margin-bottom: 12px;
+}
+
+#dungeonEventText {
+    color: #e2e8f0;
+    line-height: 1.6;
+    font-size: 0.92em;
+}
+
+#dungeonActions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+#dungeonActions .action-btn {
+    padding: 12px 25px;
+    min-width: auto;
+    max-width: none;
+    flex-direction: row;
+    gap: 5px;
+    background: linear-gradient(180deg, #581c87, #3b0764);
+    border-color: #7c3aed;
+    color: #c4b5fd;
+}
+
+#dungeonActions .action-btn:hover {
+    background: linear-gradient(180deg, #6d28d9, #581c87);
+    border-color: #a78bfa;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+
+/* ============================================
+   SEÇÃO 15: PAINEL DO INVENTÁRIO
+   ============================================ */
+
+#inventoryPanel {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+#inventoryPanel h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    padding-top: 5px;
+}
+
+#inventoryList {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 2px;
+}
+
+.inventory-item {
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #475569;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+    min-width: 0;
+}
+
+.inventory-item:hover {
+    border-color: #64748b;
+    background: rgba(51, 65, 85, 0.8);
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    min-width: 0;
+    flex: 1;
+}
+
+.item-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.item-name {
+    color: #e2e8f0;
+    font-weight: bold;
+    font-size: 0.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.item-qty {
+    color: #64748b;
+    font-size: 0.85em;
+    flex-shrink: 0;
+}
+
+.item-use-btn {
+    padding: 5px 14px;
+    background: linear-gradient(180deg, #065f46, #064e3b);
+    border: 1px solid #047857;
+    color: #6ee7b7;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.82em;
+    font-weight: bold;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.item-use-btn:hover {
+    background: linear-gradient(180deg, #047857, #065f46);
+    border-color: #10b981;
+}
+
+
+/* ============================================
+   SEÇÃO 16: PAINEL DA CIDADE
+   ============================================ */
+
+#cidadePanel {
+    text-align: center;
+    width: 100%;
+}
+
+#cidadePanel h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+#cidadeOptions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.cidade-btn {
+    background: linear-gradient(180deg, rgba(51, 65, 85, 0.9), rgba(30, 41, 59, 0.95));
+    border: 1px solid #475569;
+    border-radius: 10px;
+    padding: 18px 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #e2e8f0;
+    font-size: 0.95em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.cidade-btn:hover {
+    border-color: #38bdf8;
+    background: linear-gradient(180deg, rgba(71, 85, 105, 0.9), rgba(51, 65, 85, 0.95));
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.cidade-btn small {
+    display: block;
+    color: #94a3b8;
+    font-weight: normal;
+    font-size: 0.8em;
+    margin-top: 3px;
+}
+
+
+/* ============================================
+   SEÇÃO 17: LOG / HISTÓRICO (CORRIGIDO)
+   ============================================ */
+
+#log {
+    width: 280px;
+    min-width: 220px;
+    max-height: 500px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid #38bdf8;
+    padding: 12px;
+    overflow-y: auto;
+    font-size: 0.82em;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.1);
+    align-self: flex-start;
+    position: sticky;
+    top: 30px;
+    flex-shrink: 0;
+    display: block;
+}
+
+#log > div:first-child {
+    color: #ffd700;
+    font-size: 1em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #334155;
+    margin-bottom: 8px;
+}
+
+#logContent p {
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+
+/* ============================================
+   SEÇÃO 18: TELAS OVERLAY
+   ============================================ */
+
+.overlay-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(4px);
+}
+
+.overlay-box {
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 2px solid #38bdf8;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    animation: overlayPopIn 0.3s ease;
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+}
+
+@keyframes overlayPopIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#resultScreen .overlay-box {
+    border-color: #38bdf8;
+}
+
+#resultTitle {
+    color: #ffd700;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.result-icon-display {
+    font-size: 3.5em;
+    margin: 10px 0;
+}
+
+#resultText {
+    color: #cbd5e1;
+    margin: 12px 0;
+    line-height: 1.6;
+    font-size: 0.95em;
+}
+
+#resultRewards {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 12px 0;
+    color: #4ade80;
+    line-height: 1.8;
+    font-size: 0.92em;
+    border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.levelup-box {
+    border-color: #ffd700 !important;
+    background: linear-gradient(135deg, #422006, #1c1917) !important;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.3) !important;
+    animation: levelupAnim 0.5s ease !important;
+}
+
+@keyframes levelupAnim {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(3deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.levelup-box h2 {
+    color: #ffd700;
+    font-size: 2em;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+#levelUpText {
+    color: #e2e8f0;
+    line-height: 2;
+    font-size: 1em;
+}
+
+.gameover-box {
+    border-color: #ef4444 !important;
+    background: linear-gradient(135deg, #450a0a, #1c1917) !important;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.3) !important;
+}
+
+.gameover-box h2 {
+    color: #ef4444;
+    font-size: 2em;
+    margin-bottom: 12px;
+    text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+}
+
+.gameover-box p {
+    color: #d1d5db;
+    margin: 8px 0;
+    font-size: 0.95em;
+}
+
+
+/* ============================================
+   SEÇÃO 19: NOTIFICAÇÃO FLUTUANTE
+   ============================================ */
+
+.notification-popup {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #1e293b, #334155);
+    border: 1px solid #38bdf8;
+    border-radius: 10px;
+    padding: 14px 22px;
+    z-index: 200;
+    animation: notifSlideIn 0.3s ease;
+    max-width: 320px;
+    box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+}
+
+@keyframes notifSlideIn {
+    0% { transform: translateX(120%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+#notificationText {
+    color: #e2e8f0;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+
+/* ============================================
+   SEÇÃO 20: ANIMAÇÕES UTILITÁRIAS
+   ============================================ */
+
+.shake {
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.flash-red {
+    animation: flashRed 0.3s ease;
+}
+
+@keyframes flashRed {
+    0% { box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.4); }
+    100% { box-shadow: none; }
+}
+
+.flash-green {
+    animation: flashGreen 0.3s ease;
+}
+
+@keyframes flashGreen {
+    0% { box-shadow: inset 0 0 30px rgba(74, 222, 128, 0.4); }
+    100% { box-shadow: none; }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(56, 189, 248, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(56, 189, 248, 0.6); }
+}
+
+
+/* ============================================
+   SEÇÃO 21: SCROLLBAR CUSTOMIZADA
+   ============================================ */
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+
+/* ============================================
+   SEÇÃO 22: LOJA E FERREIRO
+   ============================================ */
+
+.gold-display {
+    text-align: center;
+    color: #fbbf24;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 12px;
+    padding: 8px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+}
+
+.shop-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #475569;
+}
+
+.shop-tab {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: rgba(30, 41, 59, 0.8);
+    color: #94a3b8;
+}
+
+.shop-tab:hover {
+    background: rgba(51, 65, 85, 0.9);
+    color: #e2e8f0;
+    transform: none;
+    box-shadow: none;
+}
+
+.shop-tab.active-tab {
+    background: linear-gradient(180deg, #38bdf8, #0ea5e9);
+    color: white;
+}
+
+.shop-content {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 5px;
+}
+
+.shop-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.shop-hint {
+    text-align: center;
+    color: #64748b;
+    padding: 20px;
+    font-style: italic;
+}
+
+.shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 10px 12px;
+    transition: all 0.2s ease;
+    min-width: 0;
+}
+
+.shop-item:hover {
+    border-color: #475569;
+    background: rgba(51, 65, 85, 0.8);
+}
+
+.shop-item-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.shop-item-icon {
+    font-size: 1.5em;
+    width: 35px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.shop-item-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.shop-item-name {
+    color: #e2e8f0;
+    font-weight: bold;
+    font-size: 0.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.shop-item-desc {
+    color: #64748b;
+    font-size: 0.75em;
+    margin-top: 2px;
+}
+
+.shop-item-stats {
+    color: #4ade80;
+    font-size: 0.75em;
+    margin-top: 1px;
+}
+
+.shop-item-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.shop-price-tag {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 0.88em;
+    white-space: nowrap;
+}
+
+.shop-buy-btn {
+    padding: 6px 14px;
+    background: linear-gradient(180deg, #065f46, #064e3b);
+    border: 1px solid #047857;
+    color: #6ee7b7;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.shop-buy-btn:hover {
+    background: linear-gradient(180deg, #047857, #065f46);
+    border-color: #10b981;
+    transform: translateY(-1px);
+}
+
+.shop-sell-btn {
+    padding: 6px 14px;
+    background: linear-gradient(180deg, #78350f, #451a03);
+    border: 1px solid #92400e;
+    color: #fbbf24;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8em;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.shop-sell-btn:hover {
+    background: linear-gradient(180deg, #92400e, #78350f);
+    border-color: #f59e0b;
+    transform: translateY(-1px);
+}
+
+.shop-buy-btn:disabled,
+.shop-sell-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* ============================================
+   SEÇÃO 23: INVENTÁRIO COM SLOTS DE EQUIPAMENTO
+   ============================================ */
+
+#inventoryPanel h4 {
+    color: #38bdf8;
+    margin-bottom: 10px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.inventory-divider {
+    border: none;
+    border-top: 1px solid #334155;
+    margin: 15px 0;
+}
+
+#equipmentSlots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.equip-slot {
+    background: rgba(15, 23, 42, 0.8);
+    border: 2px solid #334155;
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.equip-slot:hover {
+    border-color: #475569;
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.equip-slot.equipped {
+    border-color: #38bdf8;
+    background: rgba(14, 165, 233, 0.1);
+}
+
+.equip-slot.equipped:hover {
+    border-color: #f87171;
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.equip-slot-icon {
+    font-size: 1.6em;
+    margin-bottom: 3px;
+}
+
+.equip-slot-label {
+    font-size: 0.7em;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.equip-slot-item {
+    font-size: 0.75em;
+    color: #94a3b8;
+    margin-top: 3px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.equip-slot.equipped .equip-slot-item {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+#equipBonusDisplay {
+    text-align: center;
+    padding: 8px;
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    border-radius: 8px;
+    font-size: 0.82em;
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+#itemsSection {
+    margin-top: 5px;
+}
+
+.inventory-item.is-equipment {
+    border-left: 3px solid #38bdf8;
+}
+
+.item-actions {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.item-equip-btn {
+    padding: 4px 12px;
+    background: linear-gradient(180deg, #1e3a5f, #0f2942);
+    border: 1px solid #2563eb;
+    color: #60a5fa;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.78em;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.item-equip-btn:hover {
+    background: linear-gradient(180deg, #2563eb, #1e3a5f);
+    border-color: #3b82f6;
+}
+
+
+/* ============================================
+   SEÇÃO 24: HISTÓRIA / CAMPANHA
+   ============================================ */
+
+#areaOptionsPanel .area-description-text {
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    padding: 10px;
+}
+
+#missaoDisplay > div {
+    backdrop-filter: blur(4px);
+}
+
+#historiaPanel {
+    color: #e2e8f0;
+}
+
+#historiaContent {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+#historiaContent button {
+    margin: 5px 0;
+}
+
+#rankingContent {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+
+/* ============================================
+   SEÇÃO 25: CONTROLE DE ÁUDIO
+   ============================================ */
+
+#audioControls {
+    transition: opacity 0.3s;
+}
+
+#audioControls:hover {
+    opacity: 1 !important;
+}
+
+#volumeSlider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    background: #334155;
+    border-radius: 2px;
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #38bdf8;
+    cursor: pointer;
+    border: none;
+}
+
+
+/* ============================================
+   SEÇÃO 26: RESPONSIVIDADE UNIFICADA
+   ============================================ */
+
+@media (max-width: 1200px) {
+    #game.active {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px 15px;
+    }
+
+    #player {
+        width: 260px;
+        min-width: 240px;
+    }
+
+    #actionPanel {
+        flex: 1 1 400px;
+        max-width: 480px;
+        min-width: 300px;
+    }
+
+    #log {
+        width: 240px;
+        min-width: 200px;
+    }
+}
+
+@media (max-width: 1024px) {
+    #game.active {
+        padding-top: 20px;
+        gap: 15px;
+    }
+
+    #player {
+        width: 250px;
+        padding: 15px;
+        font-size: 0.85em;
+    }
+
+    #actionPanel {
+        flex: 1 1 350px;
+        max-width: 420px;
+        min-width: 280px;
+        padding: 20px;
+    }
+
+    #log {
+        width: 220px;
+        min-width: 180px;
+        font-size: 0.78em;
+    }
+
+    #cardsContainer {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    #game.active {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        gap: 12px;
+        flex-wrap: nowrap;
+    }
+
+    #player {
+        width: 95%;
+        max-width: 500px;
+        min-width: auto;
+    }
+
+    #actionPanel {
+        width: 95%;
+        max-width: 500px;
+        min-width: auto;
+        flex: none;
+        max-height: none;
+    }
+
+    #log {
+        width: 95%;
+        max-width: 500px;
+        min-width: auto;
+        max-height: 250px;
+        position: static;
+    }
+
+    #cardsContainer {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    #areasContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #areaActionButtons {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .action-btn {
+        min-width: 100px;
+        max-width: 140px;
+    }
+
+    #cidadeOptions {
+        grid-template-columns: 1fr;
+    }
+
+    #combatActions {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+    #mainMenu {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #mainMenu button {
+        width: 80%;
+    }
+
+    .overlay-box {
+        width: 95%;
+        padding: 20px;
+    }
+
+    .notification-popup {
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+
+    #equipmentSlots {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .equip-slot {
+        padding: 8px 5px;
+        min-height: 70px;
+    }
+
+    .equip-slot-icon {
+        font-size: 1.3em;
+    }
+
+    .shop-item {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .shop-item-price {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    #welcomeScreen h1 {
+        font-size: 2em;
+    }
+
+    #cardsContainer {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    #player {
+        padding: 12px;
+        font-size: 0.8em;
+    }
+
+    #player img {
+        width: 80px;
+    }
+
+    #actionPanel {
+        padding: 15px;
+    }
+
+    #areasContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .area-card {
+        padding: 12px 8px;
+    }
+
+    .area-card .area-icon {
+        font-size: 2em;
+    }
+
+    #combatLog {
+        max-height: 80px;
+    }
+
+    #equipmentSlots {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .shop-tab {
+        font-size: 0.8em;
+        padding: 8px 10px;
+    }
+
+    .action-btn {
+        min-width: 90px;
+        max-width: 120px;
+        padding: 8px 12px;
+    }
+
+    .btn-icon {
+        font-size: 1.2em;
+    }
+
+    .btn-text {
+        font-size: 0.75em;
+    }
+
+    .btn-desc {
+        font-size: 0.55em;
+    }
+}
+
+.popup-desbloqueio {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: #ffd700;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-size: 18px;
+    animation: fadeInOut 3s ease;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+    10% { opacity: 1; transform: translateX(-50%) scale(1); }
+    90% { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+}
+
+/* ============================================
+   SEÇÃO 27: POPUP DE ÁREA DESBLOQUEADA
+   ============================================ */
+
+#areaUnlockPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    border: 2px solid #ffd700;
+    border-radius: 16px;
+    padding: 30px 40px;
+    text-align: center;
+    z-index: 300;
+    min-width: 300px;
+    max-width: 400px;
+    box-shadow:
+        0 0 30px rgba(255, 215, 0, 0.4),
+        0 0 60px rgba(255, 215, 0, 0.15),
+        inset 0 0 30px rgba(255, 215, 0, 0.05);
+    animation: none;
+}
+
+#areaUnlockPopup.show {
+    display: block !important;
+    animation: unlockPopIn 0.5s ease forwards,
+               unlockPopOut 0.5s ease 3.5s forwards;
+}
+
+/* Brilho dourado de fundo */
+.unlock-glow {
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 18px;
+    background: linear-gradient(45deg, #ffd700, transparent, #ffd700, transparent);
+    background-size: 400% 400%;
+    z-index: -1;
+    animation: unlockGlowMove 2s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes unlockGlowMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Ícone da área */
+.unlock-icon {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    animation: unlockBounce 0.6s ease 0.3s both;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+@keyframes unlockBounce {
+    0% { transform: scale(0) rotate(-30deg); }
+    50% { transform: scale(1.3) rotate(5deg); }
+    70% { transform: scale(0.9) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Texto "NOVA ÁREA DESBLOQUEADA!" */
+.unlock-label {
+    color: #ffd700;
+    font-size: 0.85em;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: unlockFadeIn 0.4s ease 0.4s both;
+}
+
+/* Nome da área */
+.unlock-name {
+    color: #ffffff;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.3),
+        0 2px 4px rgba(0, 0, 0, 0.5);
+    animation: unlockFadeIn 0.4s ease 0.6s both;
+}
+
+/* Nível requerido */
+.unlock-level {
+    color: #94a3b8;
+    font-size: 0.85em;
+    animation: unlockFadeIn 0.4s ease 0.8s both;
+}
+
+/* Animações de entrada e saída */
+@keyframes unlockPopIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes unlockPopOut {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(0.5) translateY(-30px);
+        opacity: 0;
+    }
+}
+
+@keyframes unlockFadeIn {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Fundo escuro atrás do popup */
+#areaUnlockOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 299;
+    backdrop-filter: blur(3px);
+    animation: overlayFadeIn 0.3s ease;
+}
+
+@keyframes overlayFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ============================================
+   SEÇÃO 27: SISTEMA DE ALQUIMIA
+   ============================================ */
+
+.receita-card {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid #334155;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s ease;
+}
+
+.receita-card:hover:not(.receita-bloqueada) {
+    border-color: #475569;
+    background: rgba(51, 65, 85, 0.85);
+}
+
+.receita-card.receita-disponivel {
+    border-color: #065f46;
+    background: rgba(6, 95, 70, 0.15);
+}
+
+.receita-card.receita-bloqueada {
+    opacity: 0.4;
+    filter: grayscale(0.5);
+}
+
+.receita-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.receita-icone {
+    font-size: 1.8em;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.receita-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.receita-nome {
+    color: #e2e8f0;
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.receita-desc {
+    color: #64748b;
+    font-size: 0.75em;
+    margin-top: 2px;
+}
+
+.receita-ingredientes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+}
+
+.ingrediente {
+    font-size: 0.78em;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+    white-space: nowrap;
+}
+
+.ingrediente.tem {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.1);
+}
+
+.ingrediente.falta {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.3);
+    background: rgba(248, 113, 113, 0.1);
+}
+
+.receita-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.receita-custo {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 0.88em;
+}
+
+.receita-nivel {
+    color: #f87171;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.receita-efeito {
+    color: #4ade80;
+    font-size: 0.78em;
+    font-style: italic;
+}
+
+.craft-btn {
+    padding: 6px 16px;
+    background: linear-gradient(180deg, #065f46, #064e3b);
+    border: 1px solid #047857;
+    color: #6ee7b7;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: bold;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.craft-btn:hover:not(:disabled) {
+    background: linear-gradient(180deg, #047857, #065f46);
+    border-color: #10b981;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+}
+
+.craft-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Lista de materiais do jogador */
+.material-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    margin-bottom: 4px;
+}
+
+.material-item .mat-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.material-item .mat-icon {
+    font-size: 1.3em;
+}
+
+.material-item .mat-nome {
+    color: #e2e8f0;
+    font-size: 0.88em;
+}
+
+.material-item .mat-qtd {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+/* ============================================
+   SEÇÃO 28: TAVERNA / NPCs
+   ============================================ */
+
+.npc-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.npc-card {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    border: 2px solid #475569;
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.npc-card:hover {
+    border-color: #fbbf24;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(251, 191, 36, 0.2);
+}
+
+.npc-emoji {
+    font-size: 2.5em;
+    display: block;
+    margin-bottom: 6px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.npc-nome {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 0.95em;
+    margin-bottom: 3px;
+}
+
+.npc-role {
+    color: #64748b;
+    font-size: 0.75em;
+}
+
+.dialogue-box {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98));
+    border: 2px solid #fbbf24;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 10px;
+    animation: dialogueSlide 0.3s ease;
+}
+
+@keyframes dialogueSlide {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.dialogue-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #334155;
+}
+
+.dialogue-npc-icon {
+    font-size: 2em;
+}
+
+.dialogue-npc-name {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.dialogue-text {
+    color: #e2e8f0;
+    font-size: 0.9em;
+    line-height: 1.7;
+    font-style: italic;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid #fbbf24;
+}
+
+.dialogue-dica {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.2);
+    border-radius: 6px;
+    color: #fbbf24;
+    font-size: 0.82em;
+}
+
+/* ============================================
+   SEÇÃO 29: GUILDA / FACÇÃO
+   ============================================ */
+
+.guilda-atual {
+    text-align: center;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #475569;
+}
+
+.guilda-atual h4 {
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.guilda-rank-bar {
+    width: 80%;
+    height: 12px;
+    background: #1e293b;
+    border-radius: 6px;
+    margin: 8px auto;
+    overflow: hidden;
+    border: 1px solid #475569;
+}
+
+.guilda-rank-fill {
+    height: 100%;
+    border-radius: 6px;
+    transition: width 0.5s ease;
+}
+
+.guildas-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.guilda-card {
+    border: 2px solid #475569;
+    border-radius: 12px;
+    padding: 15px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.guilda-card:hover:not(.guilda-atual-card) {
+    transform: translateY(-2px);
+}
+
+.guilda-card.guilda-atual-card {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.guilda-icon {
+    font-size: 2em;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.guilda-nome {
+    font-weight: bold;
+    font-size: 0.95em;
+    margin-bottom: 4px;
+}
+
+.guilda-bonus {
+    font-size: 0.75em;
+    margin-bottom: 4px;
+}
+
+.guilda-desc {
+    color: #64748b;
+    font-size: 0.7em;
+}
+
+.guilda-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.guilda-missao {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #475569;
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+.guilda-missao h4 {
+    color: #fbbf24;
+    font-size: 0.95em;
+    margin-bottom: 8px;
+}
+
+.guilda-missao-desc {
+    color: #94a3b8;
+    font-size: 0.82em;
+    line-height: 1.5;
+}
+
+.guilda-missao-progresso {
+    margin-top: 8px;
+    font-size: 0.85em;
+    color: #4ade80;
+}
+
+/* Cores por guilda */
+.guilda-guerreiros { border-color: #dc2626; background: linear-gradient(135deg, rgba(127,29,29,0.3), rgba(15,23,42,0.9)); }
+.guilda-guerreiros:hover { border-color: #ef4444; box-shadow: 0 4px 15px rgba(239,68,68,0.2); }
+.guilda-guerreiros .guilda-nome { color: #fca5a5; }
+.guilda-guerreiros .guilda-bonus { color: #ef4444; }
+
+.guilda-arcano { border-color: #7c3aed; background: linear-gradient(135deg, rgba(76,29,149,0.3), rgba(15,23,42,0.9)); }
+.guilda-arcano:hover { border-color: #a78bfa; box-shadow: 0 4px 15px rgba(167,139,250,0.2); }
+.guilda-arcano .guilda-nome { color: #c4b5fd; }
+.guilda-arcano .guilda-bonus { color: #a78bfa; }
+
+.guilda-sombras { border-color: #475569; background: linear-gradient(135deg, rgba(30,41,59,0.5), rgba(0,0,0,0.9)); }
+.guilda-sombras:hover { border-color: #94a3b8; box-shadow: 0 4px 15px rgba(148,163,184,0.2); }
+.guilda-sombras .guilda-nome { color: #e2e8f0; }
+.guilda-sombras .guilda-bonus { color: #94a3b8; }
+
+.guilda-protetores { border-color: #0ea5e9; background: linear-gradient(135deg, rgba(7,89,133,0.3), rgba(15,23,42,0.9)); }
+.guilda-protetores:hover { border-color: #38bdf8; box-shadow: 0 4px 15px rgba(56,189,248,0.2); }
+.guilda-protetores .guilda-nome { color: #7dd3fc; }
+.guilda-protetores .guilda-bonus { color: #38bdf8; }
+
+/* ============================================
+   SEÇÃO 30: EVENTOS ALEATÓRIOS
+   ============================================ */
+
+.evento-container {
+    text-align: center;
+    animation: eventoFadeIn 0.4s ease;
+}
+
+@keyframes eventoFadeIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.evento-icone {
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+    animation: eventoBounce 1.5s ease infinite;
+}
+
+@keyframes eventoBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.evento-titulo {
+    color: #ffd700;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+.evento-descricao {
+    color: #e2e8f0;
+    font-size: 0.9em;
+    line-height: 1.6;
+    font-style: italic;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border-left: 3px solid #ffd700;
+}
+
+.evento-escolhas {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.evento-btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid;
+}
+
+.evento-btn:hover {
+    transform: translateX(5px);
+}
+
+.evento-btn-icon {
+    font-size: 1.3em;
+    flex-shrink: 0;
+}
+
+.evento-btn-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.evento-btn-label {
+    font-size: 0.95em;
+}
+
+.evento-btn-hint {
+    font-size: 0.7em;
+    opacity: 0.7;
+    font-weight: normal;
+}
+
+.evento-btn-aceitar {
+    background: linear-gradient(180deg, #065f46, #064e3b);
+    border-color: #047857;
+    color: #6ee7b7;
+}
+
+.evento-btn-aceitar:hover {
+    background: linear-gradient(180deg, #047857, #065f46);
+    border-color: #10b981;
+}
+
+.evento-btn-arriscar {
+    background: linear-gradient(180deg, #78350f, #451a03);
+    border-color: #92400e;
+    color: #fbbf24;
+}
+
+.evento-btn-arriscar:hover {
+    background: linear-gradient(180deg, #92400e, #78350f);
+    border-color: #f59e0b;
+}
+
+.evento-btn-ignorar {
+    background: linear-gradient(180deg, #334155, #1e293b);
+    border-color: #475569;
+    color: #94a3b8;
+}
+
+.evento-btn-ignorar:hover {
+    background: linear-gradient(180deg, #475569, #334155);
+    border-color: #64748b;
+}
+
+.evento-resultado {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    animation: eventoFadeIn 0.3s ease;
+}
+
+.evento-resultado-bom {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+}
+
+.evento-resultado-ruim {
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    color: #f87171;
+}
+
+.evento-resultado-neutro {
+    background: rgba(251, 191, 36, 0.1);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    color: #fbbf24;
+}
+/* ============================================
+   SEÇÃO 31: MINERAÇÃO
+   ============================================ */
+
+.mine-btn {
+    background: linear-gradient(180deg, #78350f, #451a03);
+    border-color: #92400e;
+    color: #fbbf24;
+}
+
+.mine-btn:hover:not(:disabled) {
+    background: linear-gradient(180deg, #92400e, #78350f);
+    border-color: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+@keyframes minerarAnim {
+    0% { transform: rotate(-20deg) translateY(0); }
+    100% { transform: rotate(20deg) translateY(-5px); }
+}
+
+.mineracao-resultado-card {
+    text-align: center;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 10px 0;
+    animation: eventoFadeIn 0.4s ease;
+}
+
+.mineracao-sucesso {
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+}
+
+.mineracao-falha {
+    background: rgba(248, 113, 113, 0.1);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.mineracao-raro {
+    background: rgba(251, 191, 36, 0.15);
+    border: 2px solid rgba(251, 191, 36, 0.4);
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.2);
+}
+
+.mineracao-item-ganho {
+    font-size: 2.5em;
+    margin: 8px 0;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+}
+
+.mineracao-item-nome {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 4px;
+}
+
+.mineracao-item-desc {
+    font-size: 0.8em;
+    color: #94a3b8;
+}
+
+.minerio-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.minerio-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid #334155;
+    border-radius: 6px;
+    font-size: 0.8em;
+}
+
+.minerio-preview-icon {
+    font-size: 1.2em;
+}
+
+.minerio-preview-nome {
+    color: #e2e8f0;
+}
+
+.minerio-preview-chance {
+    color: #64748b;
+    font-size: 0.75em;
+    margin-left: auto;
+}
+/* ============================================
+   SEÇÃO 32: MODO HARDCORE
+   ============================================ */
+
+.modo-btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+    border: 2px solid;
+}
+
+.modo-normal-btn {
+    background: linear-gradient(180deg, #1e3a5f, #0f2942);
+    border-color: #2563eb;
+    color: #60a5fa;
+}
+
+.modo-normal-btn:hover {
+    background: linear-gradient(180deg, #2563eb, #1e3a5f);
+    border-color: #3b82f6;
+}
+
+.modo-hardcore-btn {
+    background: linear-gradient(180deg, #450a0a, #1c0505);
+    border-color: #991b1b;
+    color: #fca5a5;
+}
+
+.modo-hardcore-btn:hover {
+    background: linear-gradient(180deg, #991b1b, #450a0a);
+    border-color: #ef4444;
+}
+
+.modo-selecionado {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    border-color: #ffd700 !important;
+    transform: scale(1.05);
+}
+
+.modo-descricao {
+    max-width: 450px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 0.9em;
+    line-height: 1.6;
+    margin: 10px auto;
+    text-align: center;
+    backdrop-filter: blur(8px);
+    /* CORREÇÃO: esconde até que um modo seja selecionado */
+    display: none;
+}
+
+.modo-descricao.normal,
+.modo-descricao.hardcore {
+    display: block;
+}
+
+.modo-descricao.normal {
+    background: rgba(15, 23, 42, 0.85);
+    border: 2px solid rgba(37, 99, 235, 0.5);
+    color: #93c5fd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.modo-descricao.hardcore {
+    background: rgba(30, 5, 5, 0.9);
+    border: 2px solid rgba(239, 68, 68, 0.6);
+    color: #fca5a5;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    animation: hardcorePulse 2s infinite;
+}
+
+@keyframes hardcorePulse {
+    0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+}
+
+.hardcore-badge {
+    color: #ef4444;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+}
+
+.hardcore-stats-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid #7f1d1d;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.9em;
+    line-height: 1.8;
+    color: #e2e8f0;
+}
+
+.hardcore-stats-box strong {
+    color: #ffd700;
+}
+/* ============================================
+   SEÇÃO 33: MAPA VISUAL INTERATIVO
+   ============================================ */
+
+#areasContainer.mapa-visual {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 15px 10px;
+    background: linear-gradient(180deg,
+        rgba(10, 20, 35, 0.9) 0%,
+        rgba(15, 25, 40, 0.85) 50%,
+        rgba(10, 20, 35, 0.9) 100%);
+    border-radius: 12px;
+    border: 1px solid #1e3a5f;
+    position: relative;
+}
+
+.mapa-tier {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.mapa-tier-label {
+    position: absolute;
+    left: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.6em;
+    color: #475569;
+    font-weight: bold;
+    writing-mode: vertical-lr;
+    text-orientation: mixed;
+    letter-spacing: 2px;
+}
+
+.mapa-conector {
+    width: 2px;
+    height: 20px;
+    background: linear-gradient(180deg, #334155, #475569, #334155);
+    margin: 0 auto;
+    position: relative;
+}
+
+.mapa-conector.ativo {
+    background: linear-gradient(180deg, #ffd700, #f59e0b, #ffd700);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.mapa-node {
+    width: 80px;
+    min-height: 80px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 8px 4px;
+    border: 2px solid;
+    text-align: center;
+}
+
+.mapa-node.desbloqueado {
+    border-color: #334155;
+    background: rgba(30, 41, 59, 0.8);
+}
+
+.mapa-node.desbloqueado:hover {
+    transform: scale(1.1);
+    z-index: 2;
+}
+
+.mapa-node.bloqueado {
+    display: none;
+}
+
+.mapa-node.atual {
+    border-color: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    animation: mapaNodePulse 2s infinite;
+}
+
+@keyframes mapaNodePulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+}
+
+.mapa-node-icon {
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+
+.mapa-node-nome {
+    font-size: 0.6em;
+    font-weight: bold;
+    color: #e2e8f0;
+    line-height: 1.2;
+    max-width: 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mapa-node-nivel {
+    font-size: 0.5em;
+    color: #64748b;
+    margin-top: 1px;
+}
+
+.mapa-node-stars {
+    font-size: 0.5em;
+    color: #fbbf24;
+}
+
+/* Cores por tier nos nodes */
+.mapa-node.tier1.desbloqueado { border-color: #166534; background: rgba(20, 60, 25, 0.6); }
+.mapa-node.tier1.desbloqueado:hover { border-color: #22c55e; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
+
+.mapa-node.tier2.desbloqueado { border-color: #92400e; background: rgba(80, 55, 20, 0.6); }
+.mapa-node.tier2.desbloqueado:hover { border-color: #f59e0b; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+
+.mapa-node.tier3.desbloqueado { border-color: #3730a3; background: rgba(30, 27, 75, 0.6); }
+.mapa-node.tier3.desbloqueado:hover { border-color: #818cf8; box-shadow: 0 4px 15px rgba(129, 140, 248, 0.3); }
+
+.mapa-node.tier4.desbloqueado { border-color: #6b21a8; background: rgba(60, 20, 70, 0.6); }
+.mapa-node.tier4.desbloqueado:hover { border-color: #c084fc; box-shadow: 0 4px 15px rgba(192, 132, 252, 0.3); }
+
+.mapa-node.tier5.desbloqueado { border-color: #dc2626; background: rgba(70, 15, 15, 0.6); }
+.mapa-node.tier5.desbloqueado:hover { border-color: #ef4444; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+
+/* Cidade no mapa */
+.mapa-cidade {
+    text-align: center;
+    margin: 10px 0;
+    padding: 8px 20px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px dashed #38bdf8;
+    border-radius: 8px;
+    color: #38bdf8;
+    font-size: 0.8em;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .mapa-node {
+        width: 65px;
+        min-height: 65px;
+    }
+    .mapa-node-icon { font-size: 1.2em; }
+    .mapa-node-nome { font-size: 0.5em; }
+}
