@@ -3644,3 +3644,17 @@ body.has-fullscreen-panel #mainGamePanel {
 body.has-fullscreen-panel #gameAppLayout {
     max-width: 100%;
 }
+#welcomeScreen {
+    pointer-events: auto !important;
+    z-index: 9999 !important;
+    position: relative !important;
+}
+
+#welcomeScreen button {
+    pointer-events: auto !important;
+    touch-action: manipulation;
+}
+
+.overlay-screen {
+    pointer-events: none !important;
+}
