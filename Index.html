@@ -1,1 +1,871 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- ============================================ -->
+    <!-- SEÇÃO 1: HEAD / CONFIGURAÇÕES -->
+    <!-- ============================================ -->
+    <meta charset="UTF-8">
+    <title>Axion: O Retorno Profano</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:,">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+<body>
 
+    <!-- ============================================ -->
+    <!-- SEÇÃO 2: TELA DE BOAS-VINDAS -->
+    <!-- ============================================ -->
+    <div id="welcomeScreen" class="screen active">
+        <div class="desktop-shell narrow">
+            <div class="screen-card welcome-card">
+                <h1>Axion: O Retorno Profano</h1>
+                <p class="welcome-subtitle">Quando os selos caem, até os deuses sangram.</p>
+
+                <div id="modoSelector">
+                    <button onclick="selecionarModo('normal')" id="btnModoNormal" class="modo-btn modo-normal-btn modo-selecionado">
+                        🎮 Modo Normal
+                    </button>
+                    <button onclick="selecionarModo('hardcore')" id="btnModoHardcore" class="modo-btn modo-hardcore-btn">
+                        ☠️ Modo Hardcore
+                    </button>
+                </div>
+
+                <div id="modoDescricao" class="modo-descricao normal">
+                    <p id="modoDescTexto">Modo clássico. Ao morrer, perde 50% do ouro e revive na cidade.</p>
+                </div>
+
+                <div class="welcome-actions">
+                    <button class="btn-jogar main-btn" onclick="abrirSelecaoPersonagem()">🎮 Jogar</button>
+                    <button class="btn-jogar btn-continuar-salvo" onclick="carregarJogoSalvo()" id="btnContinuarSalvo">💾 Continuar Jogo Salvo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 3: TELA DE SELEÇÃO DE PERSONAGEM -->
+    <!-- ============================================ -->
+    <div id="characterSelectionScreen" class="screen">
+        <div class="desktop-shell medium">
+            <div class="screen-card selection-card">
+                <h2>Escolha o seu Herói</h2>
+                <div id="cardsContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 4: TELA PRINCIPAL DO JOGO -->
+    <!-- ============================================ -->
+    <div id="game" class="screen">
+        <div id="gameAppLayout" class="desktop-shell game-shell">
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 4.1: PAINEL PRINCIPAL -->
+            <!-- ============================================ -->
+            <div id="mainGamePanel">
+
+                <!-- ============================================ -->
+                <!-- SEÇÃO 4.1.1: PAINEL DO JOGADOR -->
+                <!-- ============================================ -->
+                <div id="player">
+
+                    <!-- TOPO: CARD + BOTÕES + INFO -->
+                    <div class="player-top-selection">
+
+                        <!-- CARD DO PERSONAGEM -->
+                        <div class="player-card-section">
+                            <img id="playerImage" class="player-avatar" alt="Avatar do Jogador">
+                        </div>
+
+                        <!-- BOTÕES DE AÇÃO -->
+                        <div class="player-action-grid">
+                            <button onclick="showSubMenu('explorar')">🗺️ Explorar</button>
+                            <button onclick="showSubMenu('cidade')">🏘️ Cidade</button>
+                            <button onclick="showSubMenu('inventario')">🎒 Inventário</button>
+                            <button onclick="showSubMenu('talentos')">⭐ Talentos</button>
+                        </div>
+
+                        <!-- INFORMAÇÕES DO PERSONAGEM -->
+                        <div class="player-side-info">
+                            <div class="player-info-panel">
+                                <div class="player-info-row">
+                                    <span class="player-label">Nome:</span>
+                                    <span class="player-value" id="playerNameUI"></span>
+                                </div>
+
+                                <div class="player-info-row">
+                                    <span class="player-label">Raça:</span>
+                                    <span class="player-value" id="raceUI"></span>
+                                </div>
+
+                                <div class="player-info-row">
+                                    <span class="player-label">Classe:</span>
+                                    <span class="player-value" id="classUI"></span>
+                                </div>
+
+                                <div class="player-gold-level">
+                                    <span class="gold-badge">💰 <span id="goldUI"></span></span>
+                                    <span class="level-badge">⭐ Lv.<span id="levelUI"></span></span>
+                                </div>
+
+                                <div class="player-potions">
+                                    🧪 Poções: <span id="potionsUI"></span>
+                                </div>
+
+                                <div class="player-combat-stats">
+                                    <div class="combat-stat-badge atk">
+                                        <span id="atkTypeIcon">⚔️</span> ATK: <span id="mainAtkUI">0</span>
+                                    </div>
+                                    <div class="combat-stat-badge def">
+                                        🛡️ DEF: <span id="mainDefUI">0</span>
+                                    </div>
+                                </div>
+
+                                <div class="player-attributes compact-attributes">
+                                    <div class="attr-item">⚔️ Força: <strong id="forcaUI"></strong></div>
+                                    <div class="attr-item">🏹 Destreza: <strong id="destrezaUI"></strong></div>
+                                    <div class="attr-item">❤️ Vigor: <strong id="vigorUI"></strong></div>
+                                    <div class="attr-item">🔮 Inteligência: <strong id="inteligenciaUI"></strong></div>
+                                    <div class="attr-item">📖 Sabedoria: <strong id="sabedoriaUI"></strong></div>
+                                    <div class="attr-item">🗣️ Carisma: <strong id="carismaUI"></strong></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BARRA DE HP -->
+                    <div class="player-bar-section">
+                        <div class="bar-row">
+                            <span class="bar-icon">❤️</span>
+                            <span class="bar-text" id="hpText"></span>
+                        </div>
+                        <div class="hp-container">
+                            <div id="mainPlayerHpBar" class="hp-bar-fill-main"></div>
+                        </div>
+                    </div>
+
+                    <!-- BARRA DE XP -->
+                    <div class="player-bar-section">
+                        <div class="bar-row">
+                            <span class="bar-icon">📊</span>
+                            <span class="bar-text">XP: <span id="xpText">0/100</span></span>
+                        </div>
+                        <div class="xp-container">
+                            <div id="playerXpBar" class="xp-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================ -->
+                <!-- SEÇÃO 4.1.2: PAINEL DE AÇÕES / SUBMENUS -->
+                <!-- ============================================ -->
+                <div id="actionPanel">
+
+                    <!-- ERRO 1 CORRIGIDO: style="" estava quebrado -->
+                    <!-- ANTES: style="> -->
+                    <!-- DEPOIS: removido o style vazio -->
+                    <div id="navigationContainer" class="app-panel active-panel">
+                        <div id="mainMenu"></div>
+                        <div id="subMenu"></div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.1: ÁREAS -->
+                    <!-- ============================================ -->
+                    <!-- ERRO 2 CORRIGIDO: div auto-fechava imediatamente -->
+                    <!-- ANTES: <div id="areaSelectionPanel" class="app-panel"></div> -->
+                    <!-- DEPOIS: <div id="areaSelectionPanel" class="app-panel"> -->
+                    <div id="areaSelectionPanel" class="app-panel">
+                        <h3>🗺️ Escolha uma Área para Explorar</h3>
+                        <div id="areasContainer">
+                            <div class="area-card" id="area-floresta" onclick="selecionarArea('floresta')">
+                                <div class="area-icon">🌲</div>
+                                <h4>Floresta Sombria</h4>
+                                <p>Nível 1-3</p>
+                                <span class="area-difficulty">⭐</span>
+                                <div class="lock-overlay" id="lock-floresta">🔒 Nv.1</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-pantano" onclick="selecionarArea('pantano')">
+                                <div class="area-icon">🐸</div>
+                                <h4>Pântano Venenoso</h4>
+                                <p>Nível 4-6</p>
+                                <span class="area-difficulty">⭐</span>
+                                <div class="lock-overlay" id="lock-pantano">🔒 Nv.4</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-colinas" onclick="selecionarArea('colinas')">
+                                <div class="area-icon">⛰️</div>
+                                <h4>Colinas Sangrentas</h4>
+                                <p>Nível 7-9</p>
+                                <span class="area-difficulty">⭐⭐</span>
+                                <div class="lock-overlay" id="lock-colinas">🔒 Nv.7</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-ruinas" onclick="selecionarArea('ruinas')">
+                                <div class="area-icon">🏚️</div>
+                                <h4>Ruínas Esquecidas</h4>
+                                <p>Nível 10-12</p>
+                                <span class="area-difficulty">⭐⭐</span>
+                                <div class="lock-overlay" id="lock-ruinas">🔒 Nv.10</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-deserto" onclick="selecionarArea('deserto')">
+                                <div class="area-icon">🏜️</div>
+                                <h4>Deserto Escaldante</h4>
+                                <p>Nível 13-15</p>
+                                <span class="area-difficulty">⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-deserto">🔒 Nv.13</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-cemiterio" onclick="selecionarArea('cemiterio')">
+                                <div class="area-icon">⚰️</div>
+                                <h4>Cemitério Profano</h4>
+                                <p>Nível 16-18</p>
+                                <span class="area-difficulty">⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-cemiterio">🔒 Nv.16</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-caverna" onclick="selecionarArea('caverna')">
+                                <div class="area-icon">🕳️</div>
+                                <h4>Caverna Profunda</h4>
+                                <p>Nível 19-21</p>
+                                <span class="area-difficulty">⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-caverna">🔒 Nv.19</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-vulcao" onclick="selecionarArea('vulcao')">
+                                <div class="area-icon">🌋</div>
+                                <h4>Vulcão Infernal</h4>
+                                <p>Nível 22-24</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-vulcao">🔒 Nv.22</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-geleira" onclick="selecionarArea('geleira')">
+                                <div class="area-icon">🏔️</div>
+                                <h4>Geleira Eterna</h4>
+                                <p>Nível 25-27</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-geleira">🔒 Nv.25</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-cidadeFant" onclick="selecionarArea('cidadeFant')">
+                                <div class="area-icon">👻</div>
+                                <h4>Cidade Fantasma</h4>
+                                <p>Nível 28-30</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-cidadeFant">🔒 Nv.28</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-abismo" onclick="selecionarArea('abismo')">
+                                <div class="area-icon">🌑</div>
+                                <h4>Abismo Sombrio</h4>
+                                <p>Nível 31-33</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-abismo">🔒 Nv.31</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-castelo" onclick="selecionarArea('castelo')">
+                                <div class="area-icon">🏰</div>
+                                <h4>Castelo Amaldiçoado</h4>
+                                <p>Nível 34-36</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-castelo">🔒 Nv.34</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-planoAstral" onclick="selecionarArea('planoAstral')">
+                                <div class="area-icon">🌌</div>
+                                <h4>Plano Astral</h4>
+                                <p>Nível 37-39</p>
+                                <span class="area-difficulty">⭐⭐⭐⭐⭐</span>
+                                <div class="lock-overlay" id="lock-planoAstral">🔒 Nv.37</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-infernus" onclick="selecionarArea('infernus')">
+                                <div class="area-icon">🔥</div>
+                                <h4>Infernus</h4>
+                                <p>Nível 40-42</p>
+                                <span class="area-difficulty">☠️☠️</span>
+                                <div class="lock-overlay" id="lock-infernus">🔒 Nv.40</div>
+                            </div>
+
+                            <div class="area-card locked" id="area-tronoDeus" onclick="selecionarArea('tronoDeus')">
+                                <div class="area-icon">⚡</div>
+                                <h4>Trono dos Deuses</h4>
+                                <p>Nível 43-45</p>
+                                <span class="area-difficulty">☠️☠️☠️</span>
+                                <div class="lock-overlay" id="lock-tronoDeus">🔒 Nv.43</div>
+                            </div>
+                        </div>
+                        <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.2: OPÇÕES DA ÁREA -->
+                    <!-- ============================================ -->
+                    <div id="areaOptionsPanel" class="app-panel">
+                        <h3 id="areaOptionsTitle">Área Selecionada</h3>
+                        <p id="areaOptionsDescription" class="area-description-text"></p>
+                        <div id="missaoDisplay"></div>
+
+                        <div id="areaActionButtons">
+                            <button class="action-btn hunt-btn" onclick="iniciarCaca()">
+                                <span class="btn-icon">🏹</span>
+                                <span class="btn-text">CAÇAR</span>
+                                <span class="btn-desc">Encontre monstros</span>
+                            </button>
+
+                            <button class="action-btn dungeon-btn" onclick="iniciarMasmorra()">
+                                <span class="btn-icon">🏰</span>
+                                <span class="btn-text">MASMORRA</span>
+                                <span class="btn-desc">Masmorras perigosas</span>
+                            </button>
+
+                            <button class="action-btn mine-btn" onclick="iniciarMineracao()">
+                                <span class="btn-icon">⛏️</span>
+                                <span class="btn-text">MINERAR</span>
+                                <span class="btn-desc">Extrair minérios</span>
+                            </button>
+                        </div>
+                        <button onclick="voltarSelecaoArea()" class="back-btn">⬅️ Voltar às Áreas</button>
+                    </div> <div id="missaoTexto"></div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.3: MINERAÇÃO -->
+                    <!-- ============================================ -->
+                    <div id="mineracaoPanel" class="app-panel">
+                        <h3 style="color:#ffd700;text-align:center;margin-bottom:8px;">⛏️ Mineração</h3>
+                        <p id="mineracaoAreaNome" style="text-align:center;color:#94a3b8;font-size:0.85em;margin-bottom:10px;"></p>
+
+                        <div id="mineracaoInfo" style="text-align:center;margin-bottom:12px;">
+                            <p style="color:#fbbf24;font-size:0.9em;">Tentativas restantes: <strong id="mineracaoTentativas">3</strong>/3</p>
+                            <p style="color:#64748b;font-size:0.78em;">Custo: <span id="mineracaoCusto">10</span> ouro por tentativa</p>
+                        </div>
+
+                        <!-- ERRO 3 CORRIGIDO: style quebrado, faltava "display:none;" -->
+                        <!-- ANTES: <div id="mineracaoAnimacao" ;text-align:center;padding:30px;"> -->
+                        <!-- DEPOIS: corrigido o atributo style -->
+                        <div id="mineracaoAnimacao" style="display:none;text-align:center;padding:30px;">
+                            <div id="mineracaoEmoji" style="font-size:3em;">⛏️</div>
+                            <p style="color:#e2e8f0;margin-top:10px;">Minerando...</p>
+                        </div>
+
+                        <div id="mineracaoResultado"></div>
+
+                        <div id="mineracaoBotoes" style="text-align:center;margin-top:12px;">
+                            <button onclick="minerar()" id="btnMinerar" class="action-btn mine-btn" style="margin:0 auto;">
+                                <span class="btn-icon">⛏️</span>
+                                <span class="btn-text">MINERAR</span>
+                                <span class="btn-desc">Gastar tentativa</span>
+                            </button>
+                        </div>
+
+                        <div id="mineracaoMateriais" style="margin-top:15px;"></div>
+                        <button onclick="voltarDaMineracao()" class="back-btn">⬅️ Voltar à Área</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.4: COMBATE -->
+                    <!-- ============================================ -->
+                    <div id="monsterArea" class="app-panel combat-screen">
+                        <div id="combatBackground" class="battle-background">
+
+                            <div class="combat-hud-top">
+                                <div class="combat-status-panel enemy-panel">
+                                    <div class="combat-panel-frame">
+                                        <div class="combat-portrait-frame enemy-portrait-frame">
+                                            <img id="combatEnemyPortrait" class="combat-portrait-img" src="" alt="Monstro">
+                                            <div id="combatEnemyPortraitFallback" class="combat-portrait-fallback">👹</div>
+                                        </div>
+
+                                        <div class="combat-status-info">
+                                            <div id="monsterName" class="combat-char-name">Monstro</div>
+                                            <div id="monsterLevelUI" class="combat-char-subname">Nv.1</div>
+
+                                            <div class="combat-stats-row">
+                                                <span class="combat-stat-badge">⚔️ <span id="monsterAtkUI">0</span></span>
+                                                <span class="combat-stat-badge">🛡️ <span id="monsterDefUI">0</span></span>
+                                            </div>
+
+                                            <div class="combat-bar-wrapper">
+                                                <span class="combat-bar-label hp-label">HP</span>
+                                                <div class="combat-bar-track">
+                                                    <div id="monsterHpBar" class="combat-bar-fill enemy-hp-fill" style="width:100%"></div>
+                                                </div>
+                                                <span id="monsterHpText" class="combat-bar-text">0/0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="combat-status-panel player-panel">
+                                    <div class="combat-panel-frame player-panel-frame">
+                                        <div class="combat-status-info player-status-info">
+                                            <div id="combatPlayerName" class="combat-char-name player-name-color">Jogador</div>
+                                            <div id="combatPlayerLevelUI" class="combat-char-subname">Nv.1</div>
+
+                                            <div class="combat-stats-row">
+                                                <span class="combat-stat-badge">⚔️ <span id="combatAtkUI">0</span></span>
+                                                <span class="combat-stat-badge">🛡️ <span id="combatDefUI">0</span></span>
+                                            </div>
+
+                                            <div class="combat-bar-wrapper">
+                                                <span class="combat-bar-label hp-label">HP</span>
+                                                <div class="combat-bar-track">
+                                                    <div id="combatPlayerHpBar" class="combat-bar-fill player-hp-fill" style="width:100%"></div>
+                                                </div>
+                                                <span id="combatPlayerHpText" class="combat-bar-text">0/0</span>
+                                            </div>
+
+                                            <div id="manaBarWrapper" class="combat-bar-wrapper">
+                                                <span class="combat-bar-label mana-label">MP</span>
+                                                <div class="combat-bar-track">
+                                                    <div id="combatManaBar" class="combat-bar-fill mana-fill" style="width:100%"></div>
+                                                </div>
+                                                <span id="combatManaText" class="combat-bar-text">0/0</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="combat-portrait-frame player-portrait-frame">
+                                            <img id="combatPlayerPortrait" class="combat-portrait-img" src="" alt="Jogador">
+                                            <div id="combatPlayerPortraitFallback" class="combat-portrait-fallback">🧝</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="combat-stage">
+                                <div id="enemySpriteArea" class="combat-sprite-area enemy-sprite-area">
+                                    <div id="enemySpriteBox" class="combat-sprite-box enemy-idle">
+                                        <div id="enemyFloatingDmg" class="floating-damage"></div>
+                                        <span id="monsterSpriteEmoji" class="combat-sprite-emoji">👹</span>
+                                        <img id="monsterSpriteImg" class="combat-sprite-img" src="" alt="Monstro">
+                                    </div>
+                                </div>
+
+                                <div id="playerSpriteArea" class="combat-sprite-area player-sprite-area">
+                                    <div id="playerSpriteBox" class="combat-sprite-box player-idle">
+                                        <div id="playerFloatingDmg" class="floating-damage"></div>
+                                        <span id="playerSpriteEmoji" class="combat-sprite-emoji">🧝</span>
+                                        <img id="playerSpriteImg" class="combat-sprite-img" src="" alt="Jogador">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="combat-hud-bottom">
+                                <div class="combat-info-log-panel">
+                                    <div id="combatLogWrapper" class="combat-log-wrapper combat-log-wrapper-full">
+                                        <div id="combatLog" class="combat-log-scroll"></div>
+                                    </div>
+                                </div>
+
+                                <div class="combat-actions-grid">
+                                    <button class="combat-action-btn attack-btn" id="btnAttack" onclick="atacar()">
+                                        <span class="combat-btn-icon">⚔️</span>
+                                        <span class="combat-btn-label">Atacar</span>
+                                    </button>
+
+                                    <button class="combat-action-btn skill-btn" id="btnSkill" onclick="usarHabilidade()">
+                                        <span class="combat-btn-icon">✨</span>
+                                        <span class="combat-btn-label">Habilidade</span>
+                                    </button>
+
+                                    <button class="combat-action-btn potion-btn" id="btnPotion" onclick="usePotion()">
+                                        <span class="combat-btn-icon">🧪</span>
+                                        <span class="combat-btn-label">Poção</span>
+                                    </button>
+
+                                    <button class="combat-action-btn flee-btn" id="btnFlee" onclick="fugir()">
+                                        <span class="combat-btn-icon">🏃</span>
+                                        <span class="combat-btn-label">Fugir</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.5: MASMORRA -->
+                    <!-- ============================================ -->
+                    <div id="dungeonPanel" class="app-panel">
+                        <h3 id="dungeonTitle">🏰 Masmorra</h3>
+                        <div id="dungeonProgressInfo">
+                            <span>Andar: <span id="dungeonFloor">1</span> / <span id="dungeonMaxFloor">5</span></span>
+                        </div>
+                        <div class="hp-container">
+                            <div id="dungeonProgressBar" style="width:0%; background: linear-gradient(90deg, #aa44ff, #cc66ff);"></div>
+                        </div>
+
+                        <div id="dungeonEventDisplay">
+                            <div id="dungeonEventIcon" class="dungeon-event-icon-display">🚪</div>
+                            <p id="dungeonEventText">Entrando na masmorra...</p>
+                        </div>
+
+                        <div id="dungeonActions">
+                            <button onclick="avancarMasmorra()" id="btnDungeonAdvance" class="main-btn">🚪 Avançar</button>
+                            <button onclick="sairMasmorra()" class="back-btn">🏃 Sair da Masmorra</button>
+                        </div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.6: CIDADE -->
+                    <!-- ============================================ -->
+                    <div id="cidadePanel" class="app-panel">
+                        <h3><img src="images/emoji/cidade.png" class="emoji"> Cidade</h3>
+                        <div id="cidadeOptions">
+                            <button onclick="abrirEstalagem()" class="cidade-btn">
+                                <img src="images/emoji/estalagem.png" class="emoji">
+                                Estalagem
+                                <small>Marta, a Estalajadeira</small>
+                            </button>
+
+                            <button onclick="abrirLoja()" class="cidade-btn">
+                                <img src="images/emoji/loja.png" class="emoji">
+                                Loja
+                                <small>Comprar itens</small>
+                            </button>
+
+                            <button onclick="abrirArmaria()" class="cidade-btn">
+                                <img src="images/emoji/armaria.png" class="emoji">
+                                Armaria
+                                <small>Equipamentos</small>
+                            </button>
+
+                            <button onclick="abrirTreinamento()" class="cidade-btn">
+                                <img src="images/emoji/treinamento.png" class="emoji">
+                                Treinamento
+                                <small>+Atributos</small>
+                            </button>
+
+                            <button onclick="abrirForja()" class="cidade-btn">
+                                <img src="images/emoji/forja.png" class="emoji">
+                                Forja
+                                <small>Criar itens</small>
+                            </button>
+
+                            <button onclick="abrirTaverna()" class="cidade-btn">
+                                <img src="images/emoji/taverna.png" class="emoji">
+                                Taverna
+                                <small>Conversar</small>
+                            </button>
+
+                            <button onclick="abrirArena()" class="cidade-btn">
+                                <img src="images/emoji/arena.png" alt=""> Arena
+                                <small>Ondas</small>
+                            </button>
+
+                            <button onclick="mostrarPainel('cemiterioPanel'); renderizarCemiterio()" class="cidade-btn">
+                                <img src="images/emoji/cemiterio.png" alt=""> Cemitério
+                                <small>Resgatar equip</small>
+                            </button>
+
+                            <button onclick="salvarJogo()" class="cidade-btn">
+                                <img src="images/emoji/save.png" alt=""> Salvar
+                                <small>Salvar progresso</small>
+                            </button>
+                        </div>
+                        <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.7: LOJA -->
+                    <!-- ============================================ -->
+                    <!-- ERRO 4 CORRIGIDO: div auto-fechava imediatamente -->
+                    <!-- ANTES: <div id="lojaPanel" class="app-panel" ></div> -->
+                    <!-- DEPOIS: <div id="lojaPanel" class="app-panel"> -->
+                    <div id="lojaPanel" class="app-panel">
+                        <h3><img src="images/emoji/loja.png" class="emoji"> Loja</h3>
+                        <p class="gold-display">💰 Seu Ouro: <span id="lojaGoldUI">0</span></p>
+
+                        <div class="shop-tabs">
+                            <button id="tabLojaComprar" class="shop-tab active-tab" onclick="trocarAbaLoja('comprar')">🛍️ Comprar</button>
+                            <button id="tabLojaVender" class="shop-tab" onclick="trocarAbaLoja('vender')">💰 Vender</button>
+                        </div>
+
+                        <div id="lojaComprarPanel" class="shop-content">
+                            <div id="lojaComprarLista" class="shop-list"></div>
+                        </div>
+
+                        <!-- ERRO 5 CORRIGIDO: tag não fechava e conteúdo corrompido -->
+                        <!-- ANTES: <div id="lojaVenderPanel" class="shop-content" -->
+                        <!--         style=">Você não tem itens para vender"<P></P></p> -->
+                        <!-- DEPOIS: corrigido completamente -->
+                        <div id="lojaVenderPanel" class="shop-content" style="display:none;">
+                            <div id="lojaVenderLista" class="shop-list"></div>
+                            <p class="shop-hint" id="lojaVenderVazio" style="display:none;">Você não tem itens para vender.</p>
+                        </div>
+
+                        <button onclick="fecharLoja()" class="back-btn">⬅️ Voltar à Cidade</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.8: ARMARIA -->
+                    <!-- ============================================ -->
+                    <div id="armariaPanel" class="app-panel">
+                        <h3><img src="images/emoji/armaria.png" class="emoji"> Armaria</h3>
+                        <p class="gold-display">💰 Seu Ouro: <span id="armariaGoldUI">0</span></p>
+
+                        <div class="shop-tabs">
+                            <button id="tabArmariaComprar" class="shop-tab active-tab" onclick="trocarAbaArmaria('comprar')">🛍️ Comprar</button>
+                            <button id="tabArmariaVender" class="shop-tab" onclick="trocarAbaArmaria('vender')">💰 Vender</button>
+                        </div>
+
+                        <div id="armariaComprarPanel" class="shop-content">
+                            <div id="armariaComprarLista" class="shop-list"></div>
+                        </div>
+
+                        <div id="armariaVenderPanel" class="shop-content" style="display:none;">
+                            <div id="armariaVenderLista" class="shop-list"></div>
+                            <p class="shop-hint" id="armariaVenderVazio" style="display:none;">Você não tem equipamentos para vender.</p>
+                        </div>
+
+                        <button onclick="fecharArmaria()" class="back-btn">⬅️ Voltar à Cidade</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.9: INVENTÁRIO -->
+                    <!-- ============================================ -->
+                    <div id="inventoryPanel" class="app-panel">
+                        <h3>🎒 Inventário</h3>
+
+                        <div id="equipmentSection">
+                            <h4>⚔️ Equipamentos</h4>
+                            <div id="equipmentSlots">
+                                <div class="equip-slot" id="slot-arma" onclick="desequipar('arma')">
+                                    <div class="equip-slot-icon">⚔️</div>
+                                    <div class="equip-slot-label">Arma</div>
+                                    <div class="equip-slot-item" id="slot-arma-item">Vazio</div>
+                                </div>
+                                <div class="equip-slot" id="slot-armadura" onclick="desequipar('armadura')">
+                                    <div class="equip-slot-icon">🛡️</div>
+                                    <div class="equip-slot-label">Armadura</div>
+                                    <div class="equip-slot-item" id="slot-armadura-item">Vazio</div>
+                                </div>
+                                <div class="equip-slot" id="slot-elmo" onclick="desequipar('elmo')">
+                                    <div class="equip-slot-icon">⛑️</div>
+                                    <div class="equip-slot-label">Elmo</div>
+                                    <div class="equip-slot-item" id="slot-elmo-item">Vazio</div>
+                                </div>
+                                <div class="equip-slot" id="slot-botas" onclick="desequipar('botas')">
+                                    <div class="equip-slot-icon">👢</div>
+                                    <div class="equip-slot-label">Botas</div>
+                                    <div class="equip-slot-item" id="slot-botas-item">Vazio</div>
+                                </div>
+                                <div class="equip-slot" id="slot-anel" onclick="desequipar('anel')">
+                                    <div class="equip-slot-icon">💍</div>
+                                    <div class="equip-slot-label">Anel</div>
+                                    <div class="equip-slot-item" id="slot-anel-item">Vazio</div>
+                                </div>
+                                <div class="equip-slot" id="slot-amuleto" onclick="desequipar('amuleto')">
+                                    <div class="equip-slot-icon">📿</div>
+                                    <div class="equip-slot-label">Amuleto</div>
+                                    <div class="equip-slot-item" id="slot-amuleto-item">Vazio</div>
+                                </div>
+                            </div>
+
+                            <div id="equipBonusDisplay">
+                                <span>Bônus: ⚔️ ATK +<span id="bonusAtkTotal">0</span></span>
+                                <span> | 🛡️ DEF +<span id="bonusDefTotal">0</span></span>
+                                <span> | ❤️ HP +<span id="bonusHpTotal">0</span></span>
+                            </div>
+                        </div>
+
+                        <hr class="inventory-divider">
+
+                        <div id="itemsSection">
+                            <h4>🎒 Itens</h4>
+                            <div id="inventoryList"></div>
+                            <!-- ERRO 6 CORRIGIDO: style quebrado -->
+                            <!-- ANTES: <p id="inventarioVazio"  ; color:#64748b; padding:15px;"> -->
+                            <!-- DEPOIS: style corrigido -->
+                            <p id="inventarioVazio" style="display:none; text-align:center; color:#64748b; padding:15px;">Nenhum item no inventário.</p>
+                        </div>
+
+                        <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.10: TALENTOS -->
+                    <!-- ============================================ -->
+                    <div id="talentosPanel" class="app-panel">
+                        <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">⭐ Progressão</h3>
+
+                        <div style="display:flex;gap:0;margin-bottom:12px;border-radius:8px;overflow:hidden;border:1px solid #475569;">
+                            <button onclick="trocarAbaTalento('talentos')" id="tabTalentos" class="shop-tab active-tab">⭐ Talentos</button>
+                            <button onclick="trocarAbaTalento('habilidades')" id="tabHabilidades" class="shop-tab">🌟 Habilidades</button>
+                            <button onclick="trocarAbaTalento('conquistas')" id="tabConquistas" class="shop-tab">🏆 Conquistas</button>
+                            <button onclick="trocarAbaTalento('estatisticas')" id="tabEstatisticas" class="shop-tab">📊 Stats</button>
+                        </div>
+
+                        <div id="talentos" class="aba-talento">
+                            <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">⭐ Árvore de Talentos</h4>
+                            <div id="talentosDisplay"></div>
+                        </div>
+
+                        <div id="habilidades" class="aba-talento" style="display:none;">
+                            <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🌟 Árvore de Habilidades</h4>
+                            <div id="arvoreHabilidadesContent" style="max-height:350px;overflow-y:auto;"></div>
+                        </div>
+
+                        <div id="conquistas" class="aba-talento" style="display:none;">
+                            <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">🏆 Conquistas (<span id="conquistasCount">0</span>/<span id="conquistasTotal">0</span>)</h4>
+                            <div id="conquistasLista" style="max-height:350px;overflow-y:auto;"></div>
+                        </div>
+
+                        <div id="estatisticas" class="aba-talento" style="display:none;">
+                            <h4 style="color:#38bdf8;text-align:center;margin-bottom:10px;">📊 Estatísticas</h4>
+                            <div id="estatisticasDisplay" style="font-size:0.85em;color:#94a3b8;line-height:1.8;"></div>
+                        </div>
+
+                        <button onclick="voltarMenuPrincipal()" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.11: PAINÉIS DINÂMICOS -->
+                    <!-- ============================================ -->
+                    <div id="treinamentoPanel" class="app-panel"></div>
+                    <div id="forjaPanel" class="app-panel"></div>
+                    <div id="tavernaPanel" class="app-panel"></div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.12: GUILDA -->
+                    <!-- ============================================ -->
+                    <div id="guildaPanel" class="app-panel">
+                        <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🏠 Guilda</h3>
+                        <div id="guildaContent"></div>
+                        <button onclick="fecharGuilda()" class="back-btn">⬅️ Voltar à Cidade</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.13: EVENTO -->
+                    <!-- ============================================ -->
+                    <div id="eventoPanel" class="app-panel">
+                        <div id="eventoContent"></div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.14: ARENA -->
+                    <!-- ============================================ -->
+                    <div id="arenaPanel" class="app-panel">
+                        <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">🏟️ Arena de Combate</h3>
+                        <div id="arenaContent"></div>
+                        <button onclick="fecharArena()" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.15: CEMITÉRIO -->
+                    <!-- ============================================ -->
+                    <div id="cemiterioPanel" class="app-panel">
+                        <h3 style="color:#ffd700;text-align:center;margin-bottom:12px;">⚰️ Cemitério</h3>
+                        <div id="cemiterioContent"></div>
+                        <button onclick="mostrarPainel('cidadePanel')" class="back-btn">⬅️ Voltar</button>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.16: HISTÓRIA -->
+                    <!-- ============================================ -->
+                    <div id="historiaPanel" class="app-panel">
+                        <div id="historiaContent"></div>
+                    </div>
+
+                    <!-- ============================================ -->
+                    <!-- SEÇÃO 4.1.2.17: ESTALAGEM -->
+                    <!-- ============================================ -->
+                    <div id="estalagemPanel" class="app-panel"></div>
+
+                </div> <!-- fecha #actionPanel -->
+            </div> <!-- fecha #mainGamePanel -->
+
+            <!-- ============================================ -->
+            <!-- SEÇÃO 4.2: LOG / HISTÓRICO -->
+            <!-- ============================================ -->
+            <div id="log">
+                <div style="font-weight: bold; text-align: center;">📜 Histórico de Aventura</div>
+                <div id="logContent"></div>
+            </div>
+
+        </div> <!-- fecha #gameAppLayout -->
+    </div> <!-- fecha #game -->
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 5: OVERLAYS -->
+    <!-- ============================================ -->
+
+    <div id="resultScreen" class="overlay-screen">
+        <div id="resultContent" class="overlay-box">
+            <h2 id="resultTitle">Resultado</h2>
+            <div id="resultIcon" class="result-icon-display"></div>
+            <p id="resultText"></p>
+            <div id="resultRewards"></div>
+            <button onclick="fecharResultado()" class="main-btn">Continuar</button>
+        </div>
+    </div>
+
+    <div id="levelUpScreen" class="overlay-screen">
+        <div id="levelUpContent" class="overlay-box levelup-box">
+            <h2>⭐ LEVEL UP! ⭐</h2>
+            <p id="levelUpText"></p>
+            <button onclick="fecharLevelUp()" class="main-btn">Continuar</button>
+        </div>
+    </div>
+
+    <div id="gameOverScreen" class="overlay-screen">
+        <div id="gameOverContent" class="overlay-box gameover-box">
+            <h2>💀 GAME OVER 💀</h2>
+            <p>Você foi derrotado...</p>
+            <p id="gameOverText"></p>
+
+            <div id="gameOverNormal">
+                <button onclick="reviver()">Reviver (perde 50% do ouro)</button>
+            </div>
+
+            <div id="gameOverHardcore" style="display:none;">
+                <div id="hardcoreStats" style="margin:15px 0;"></div>
+                <button onclick="location.reload()" class="back-btn" style="margin-top:8px;">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification-popup">
+        <p id="notificationText"></p>
+    </div>
+
+    <!-- ERRO 7 CORRIGIDO: div auto-fechava imediatamente -->
+    <!-- ANTES: <div id="areaUnlockPopup" ></div> -->
+    <!-- DEPOIS: <div id="areaUnlockPopup"> -->
+    <div id="areaUnlockPopup">
+        <div class="unlock-glow"></div>
+        <div class="unlock-icon" id="unlockIcon">🌲</div>
+        <div class="unlock-label">NOVA ÁREA DESBLOQUEADA!</div>
+        <div class="unlock-name" id="unlockName">Floresta Sombria</div>
+        <div class="unlock-level" id="unlockLevel">Nível mínimo: 1</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SEÇÃO 6: SCRIPTS -->
+    <!-- ============================================ -->
+   <script src="js/core.js"></script>
+<script src="js/player.js"></script>
+<script src="js/world.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/crafting.js"></script>
+<script src="js/combat.js"></script>
+<script src="js/narracao.js"></script>
+<script src="js/historia.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/save.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (typeof mostrarAreasDisponiveis === "function") {
+                mostrarAreasDisponiveis();
+            }
+        });
+    </script>
+</body>
+</html>
