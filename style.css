@@ -3650,11 +3650,17 @@ body.has-fullscreen-panel #gameAppLayout {
     position: relative !important;
 }
 
-#welcomeScreen button {
+#welcomeScreen * {
     pointer-events: auto !important;
+}
+
+button {
     touch-action: manipulation;
 }
 
-.overlay-screen {
+.overlay-screen,
+.popup-desbloqueio,
+#areaUnlockOverlay,
+#areaUnlockPopup {
     pointer-events: none !important;
 }
