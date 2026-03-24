@@ -3664,3 +3664,615 @@ button {
 #areaUnlockPopup {
     pointer-events: none !important;
 }
+
+/* ============================================
+   SEÇÃO 41: ADAPTAÇÃO COMPLETA PARA CELULAR
+   ============================================ */
+
+@media (max-width: 768px) {
+
+    html, body {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+    }
+
+    body {
+        font-size: 14px;
+        background-attachment: scroll;
+    }
+
+    /* TELAS */
+    .screen {
+        padding: 12px 8px;
+        justify-content: flex-start;
+    }
+
+    /* LAYOUT PRINCIPAL */
+    #game.active {
+        padding: 8px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    #gameAppLayout {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    #mainGamePanel {
+        width: 100%;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        min-height: auto;
+        height: auto !important;
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    /* PLAYER */
+    #player {
+        width: 100%;
+        gap: 10px;
+    }
+
+    .player-top-selection {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .player-card-section {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .player-avatar,
+    #playerImage {
+        width: 140px !important;
+        max-width: 140px !important;
+        min-height: auto !important;
+        max-height: 220px !important;
+        height: auto !important;
+    }
+
+    .player-action-grid {
+        width: 100%;
+        min-width: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 0;
+    }
+
+    .player-action-grid button {
+        padding: 12px 8px;
+        font-size: 13px;
+        min-height: 46px;
+    }
+
+    .player-side-info {
+        width: 100%;
+    }
+
+    .player-info-panel {
+        min-height: auto;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .player-gold-level,
+    .player-combat-stats {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .compact-attributes {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px 10px;
+    }
+
+    .attr-item {
+        font-size: 12px;
+    }
+
+    .bar-text {
+        font-size: 14px;
+    }
+
+    .hp-container {
+        height: 18px;
+    }
+
+    .xp-container,
+    .xpText {
+        height: 14px;
+    }
+
+    /* LOG */
+    #log {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 140px;
+        max-height: 180px;
+        font-size: 0.75em;
+    }
+
+    /* PAINEL DE AÇÕES */
+    #actionPanel {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        min-height: auto;
+    }
+
+    #actionPanel > .app-panel.active-panel {
+        width: 100%;
+        min-height: auto;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    /* MENU */
+    #mainMenu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    #mainMenu button {
+        width: 100%;
+        min-width: 0;
+        padding: 14px 10px;
+        font-size: 0.95em;
+    }
+
+    /* BOTÕES GERAIS */
+    button,
+    .main-btn,
+    .back-btn {
+        min-height: 44px;
+        touch-action: manipulation;
+    }
+
+    .back-btn {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    /* ÁREAS */
+    #areaSelectionPanel,
+    #areaOptionsPanel,
+    #cidadePanel,
+    #inventoryPanel,
+    #talentosPanel,
+    #lojaPanel,
+    #armariaPanel,
+    #forjaPanel,
+    #treinamentoPanel,
+    #guildaPanel,
+    #historiaPanel,
+    #eventoPanel,
+    #dungeonPanel {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    #areasContainer {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        max-height: none;
+    }
+
+    .area-card {
+        padding: 12px 8px;
+        border-radius: 10px;
+    }
+
+    .area-card .area-icon {
+        font-size: 1.6em;
+    }
+
+    .area-card h4 {
+        font-size: 0.78em;
+    }
+
+    .area-card p,
+    .area-difficulty {
+        font-size: 0.68em;
+    }
+
+    /* OPÇÕES DA ÁREA */
+    #areaActionButtons {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .action-btn {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        padding: 12px 10px;
+    }
+
+    .btn-icon {
+        font-size: 1.2em;
+    }
+
+    .btn-text {
+        font-size: 0.8em;
+    }
+
+    .btn-desc {
+        font-size: 0.62em;
+    }
+
+    /* CIDADE */
+    #cidadeOptions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .cidade-btn {
+        min-height: 80px;
+        max-height: none;
+        padding: 12px 8px;
+        font-size: 0.85em;
+    }
+
+    /* INVENTÁRIO */
+    #inventoryList {
+        max-height: 260px;
+    }
+
+    .inventory-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .item-info {
+        width: 100%;
+    }
+
+    .item-actions {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+    }
+
+    /* EQUIPAMENTOS */
+    #equipmentSlots {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .equip-slot {
+        min-height: 70px;
+        height: auto;
+        padding: 8px 4px;
+    }
+
+    /* LOJA / ARMARIA */
+    .shop-tabs {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .shop-tab {
+        font-size: 0.8em;
+        padding: 10px 6px;
+    }
+
+    .shop-content {
+        max-height: 260px;
+    }
+
+    .shop-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .shop-item-info {
+        width: 100%;
+    }
+
+    .shop-item-price {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    /* GUILDA */
+    .guildas-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .guilda-card {
+        padding: 12px 8px;
+    }
+
+    /* NPCS */
+    .npc-list {
+        grid-template-columns: 1fr;
+    }
+
+    .npc-card {
+        padding: 12px 8px;
+    }
+
+    /* HISTÓRIA */
+    #historiaContent {
+        max-height: none;
+    }
+
+    .historia-card {
+        padding: 12px;
+    }
+
+    .historia-texto,
+    .historia-fala-texto,
+    .historia-pensamento-texto {
+        font-size: 0.92em;
+        line-height: 1.6;
+    }
+
+    /* EVENTOS */
+    .evento-btn {
+        padding: 12px 10px;
+        font-size: 0.85em;
+    }
+
+    .evento-btn-label {
+        font-size: 0.88em;
+    }
+
+    .evento-btn-hint {
+        font-size: 0.65em;
+    }
+
+    /* MASMORRA */
+    #dungeonEventDisplay {
+        min-height: 100px;
+        padding: 16px 10px;
+    }
+
+    #dungeonActions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #dungeonActions .action-btn {
+        width: 100%;
+    }
+
+    /* COMBATE */
+    #monsterArea.combat-screen.active-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: auto !important;
+        margin: 0 auto !important;
+    }
+
+    .battle-background {
+        min-height: 420px !important;
+        height: auto !important;
+    }
+
+    .combat-hud-top {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .combat-status-panel {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .combat-panel-frame {
+        align-items: center;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .combat-portrait-frame {
+        width: 48px !important;
+        height: 48px !important;
+    }
+
+    .combat-char-name {
+        font-size: 0.85em !important;
+    }
+
+    .combat-char-subname {
+        font-size: 0.72em !important;
+    }
+
+    .combat-stats-row {
+        font-size: 0.75em !important;
+        gap: 6px;
+        margin: 0;
+    }
+
+    .combat-stats-row .combat-stat-badge {
+        padding: 2px 6px;
+        font-size: 0.78em;
+    }
+
+    .combat-bar-wrapper {
+        width: 100%;
+        gap: 4px;
+    }
+
+    .combat-bar-label {
+        min-width: 20px;
+        font-size: 0.68em;
+    }
+
+    .combat-bar-track {
+        height: 6px;
+        min-width: 0;
+    }
+
+    .combat-bar-text {
+        font-size: 0.72em !important;
+        min-width: 34px;
+    }
+
+    .combat-stage {
+        min-height: 160px !important;
+        height: auto !important;
+        padding: 10px 8px 16px;
+    }
+
+    .combat-sprite-area {
+        width: 110px !important;
+        height: 130px !important;
+    }
+
+    .combat-sprite-img {
+        max-width: 95px !important;
+        max-height: 115px !important;
+    }
+
+    .combat-actions-grid {
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+    }
+
+    .combat-action-btn {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 44px;
+        font-size: 0.82em;
+    }
+
+    .combat-log-scroll {
+        max-height: 90px;
+        font-size: 0.72em;
+    }
+
+    /* FULLSCREEN */
+    #actionPanel.fullscreen-mode {
+        padding: 10px;
+    }
+
+    #actionPanel.fullscreen-mode > .app-panel.active-panel {
+        width: 100%;
+        max-width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        font-size: 13px;
+    }
+
+    #welcomeScreen {
+        padding: 20px 10px;
+    }
+
+    #welcomeScreen h1 {
+        font-size: 2em;
+    }
+
+    .welcome-subtitle {
+        font-size: 1.05em;
+    }
+
+    #cardsContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 14px;
+    }
+
+    .player-avatar,
+    #playerImage {
+        width: 120px !important;
+        max-width: 120px !important;
+        max-height: 180px !important;
+    }
+
+    .player-action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #areasContainer {
+        grid-template-columns: 1fr;
+    }
+
+    #cidadeOptions {
+        grid-template-columns: 1fr;
+    }
+
+    #equipmentSlots {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .combat-portrait-frame {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .combat-char-name {
+        font-size: 0.78em !important;
+    }
+
+    .combat-char-subname {
+        font-size: 0.66em !important;
+    }
+
+    .combat-stats-row {
+        font-size: 0.68em !important;
+    }
+
+    .combat-bar-text {
+        font-size: 0.66em !important;
+    }
+
+    .combat-sprite-area {
+        width: 90px !important;
+        height: 110px !important;
+    }
+
+    .combat-sprite-img {
+        max-width: 78px !important;
+        max-height: 96px !important;
+    }
+
+    .combat-action-btn {
+        font-size: 0.76em;
+        padding: 10px 8px;
+    }
+
+    .shop-item-name,
+    .item-name,
+    .guilda-nome,
+    .npc-nome {
+        font-size: 0.82em;
+    }
+}
